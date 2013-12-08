@@ -10,3 +10,11 @@
     .collapse.navbar-collapse
       %ul.nav.navbar-nav
         %li.active= link_to 'Home', root_path
+
+      - user = User.new
+      = form_for_with_haml user, :as => user, :url => session_path(user), html: { class: 'navbar-form navbar-right', role: 'form' } do |f|
+        .form-group
+          = f.email_field :email, class: 'form-control', placeholder: 'Email'
+        .form-group
+          = f.password_field :password, class: 'form-control', placeholder: 'Password'
+        = f.submit 'Sign in', class: 'btn btn-success'

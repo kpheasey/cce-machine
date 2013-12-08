@@ -213,6 +213,7 @@ DEPENDENCIES
   btce
   capistrano
   debugger
+  devise (~> 3.2.2)
   haml (~> 4.0.4)
   jbuilder (~> 1.0.2)
   jquery-rails (~> 3.0.4)
