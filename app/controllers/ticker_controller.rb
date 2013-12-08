@@ -1,7 +1,6 @@
 class TickerController < ApplicationController
 
   def index
-    Market.tick
     @markets = Market.all
   end
 
