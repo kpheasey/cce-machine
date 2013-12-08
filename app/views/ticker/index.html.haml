@@ -1,0 +1,32 @@
+#chart.container{ style: 'height: 400px; width: 100%;' }
+
+.row
+  - @markets.each do |market|
+    - tick = market.tickers.latest
+    .col-4.col-sm-12.col-lg-4
+      %h2= market.name
+      %ul
+        %li= "Average - #{number_to_currency tick.average}"
+        %li= "High - #{number_to_currency tick.high}"
+        %li= "Low - #{number_to_currency tick.low}"
+
+:javascript
+  google.load("visualization", "1", {packages:["corechart"]});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var jsonData = $.ajax({
+              url: "/ticker/chart-data",
+              dataType:"json",
+              async: false
+              }).responseText;
+
+    // Create our data table out of JSON data loaded from server.
+    var data = new google.visualization.DataTable(jsonData);
+
+    var options = {
+      title: 'Average BTC Price in USD'
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart'));
+    chart.draw(data, options);
+  }
