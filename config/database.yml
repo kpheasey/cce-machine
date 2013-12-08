@@ -56,5 +56,5 @@ production:
   encoding: unicode
   database: btc-market-exchange_production
   pool: 5
-  username: Kevin
+  username: btcdeploy
   password:
