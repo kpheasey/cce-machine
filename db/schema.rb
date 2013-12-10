@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131208211104) do
+ActiveRecord::Schema.define(version: 20131210204412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,27 @@ ActiveRecord::Schema.define(version: 20131208211104) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "currencies", force: true do |t|
+    t.string   "name"
+    t.string   "code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "exchange_markets", force: true do |t|
+    t.integer  "market_id"
+    t.integer  "exchange_id"
+    t.string   "code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "exchanges", force: true do |t|
+    t.string "type"
+    t.string "name"
+    t.string "code"
+  end
+
   create_table "fees", force: true do |t|
     t.integer  "market_id"
     t.decimal  "min"
@@ -60,13 +81,16 @@ ActiveRecord::Schema.define(version: 20131208211104) do
   end
 
   create_table "markets", force: true do |t|
-    t.string "type"
-    t.string "name"
-    t.string "code"
+    t.string   "name"
+    t.string   "code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "source_id"
+    t.integer  "target_id"
   end
 
   create_table "tickers", force: true do |t|
-    t.integer  "market_id"
+    t.integer  "exchange_id"
     t.decimal  "high"
     t.decimal  "low"
     t.decimal  "average"
@@ -75,6 +99,7 @@ ActiveRecord::Schema.define(version: 20131208211104) do
     t.decimal  "sell"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "market_id"
   end
 
   create_table "users", force: true do |t|

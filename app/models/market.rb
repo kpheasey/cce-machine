@@ -1,21 +1,9 @@
 class Market < ActiveRecord::Base
+  belongs_to :source, class_name: 'Currency'
+  belongs_to :target, class_name: 'Currency'
 
-  has_many :tickers
-  has_many :fees
+  has_many :exchange_markets
+  has_many :exchanges, through: :exchange_markets
 
-  accepts_nested_attributes_for :fees, allow_destroy: true
-
-  @@markets = { btce: 'btce', mtgox: 'mtgox' }
-
-  def self.create type
-    raise "Bad market type: #{type}" unless @@markets.has_key?(type)
-    Market.find_by(name: @@markets[type])
-  end
-
-  def self.tick
-    Market.all.each do |market|
-      market.tick
-    end
-  end
-
+  has_and_belongs_to_many :currencies
 end

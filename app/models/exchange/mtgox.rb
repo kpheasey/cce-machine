@@ -1,14 +1,14 @@
-class Market::BTCE < Market
+class Exchange::MTGOX < Exchange
 
   def tick
-    response = Btce::Ticker.new 'btc_usd'
+    response = MtGox.ticker
 
     ticker = Ticker.new
     ticker.market = self
     ticker.high = response.high
     ticker.low = response.low
     ticker.average = response.avg
-    ticker.volume = response.vol
+    ticker.volume = response.volume
     ticker.buy = response.buy
     ticker.sell = response.sell
     ticker.save
