@@ -1,4 +1,4 @@
-namespace :markets do
+namespace :exchanges do
   task :tick => :environment do
    Market.tick
   end

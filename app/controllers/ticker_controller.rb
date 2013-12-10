@@ -1,7 +1,7 @@
 class TickerController < ApplicationController
 
   def index
-    @markets = Market.all
+    @exchanges = Exchange.all
   end
 
   def chart_data
@@ -12,8 +12,8 @@ class TickerController < ApplicationController
         rows: []
     }
 
-    Market.all.each do |market|
-      data[:cols] << { id: '', label: market.name, pattern: '', type: 'number'}
+    Exchange.all.each do |exchange|
+      data[:cols] << { id: '', label: exchange.name, pattern: '', type: 'number'}
     end
 
     start_time = Time.now
@@ -21,8 +21,8 @@ class TickerController < ApplicationController
       end_time = start_time - 30.minutes
       row = [ { v: "Date(#{start_time.year}, #{start_time.month}, #{start_time.day}, #{start_time.hour}, #{start_time.min}, #{start_time.sec})", f: nil} ]
 
-      Market.all.each do |market|
-        avg = market.tickers.where('tickers.created_at <= ? AND tickers.created_at >= ?', start_time, end_time).average('tickers.average')
+      Exchange.all.each do |exchange|
+        avg = exchange.tickers.where('tickers.created_at <= ? AND tickers.created_at >= ?', start_time, end_time).average('tickers.average')
         row << { v: avg, f: nil}
       end
 

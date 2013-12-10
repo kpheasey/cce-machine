@@ -14,8 +14,8 @@ class Exchange < ActiveRecord::Base
   end
 
   def self.tick
-    Exchange.all.each do |market|
-      market.tick
+    Exchange.all.each do |exchange|
+      exchange.tick
     end
   end
 

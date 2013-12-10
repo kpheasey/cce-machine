@@ -1,4 +1,14 @@
 GIT
+  remote: git://github.com/GutenYe/mtgox.git
+  revision: d3b69e8068a134a90f89b155538b1a6c87f32717
+  specs:
+    guten-mtgox (0.8.0)
+      faraday (~> 0.7)
+      faraday_middleware (~> 0.8)
+      multi_json (~> 1.0)
+      pd
+
+GIT
   remote: git://github.com/gregbell/active_admin.git
   revision: 56a255cde9f65596e1f777f5e48bd5aa8142ea73
   specs:
@@ -92,6 +102,8 @@ GEM
     execjs (2.0.2)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
+    faraday_middleware (0.9.0)
+      faraday (>= 0.7.4, < 0.9)
     formtastic (2.3.0.rc2)
       actionpack (>= 3.0)
     haml (4.0.4)
@@ -122,15 +134,13 @@ GEM
     minitest (4.7.5)
     monkey-patch (0.0.9)
       activesupport
-    mtgox (1.1.0)
-      faraday (~> 0.8, < 0.10)
-      json (~> 1.7, >= 1.7.7)
     multi_json (1.8.2)
     multipart-post (1.2.0)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (2.7.0)
     orm_adapter (0.5.0)
+    pd (1.1.0)
     pg (0.17.0)
     polyamorous (0.6.4)
       activerecord (>= 3.0)
@@ -214,10 +224,10 @@ DEPENDENCIES
   capistrano
   debugger
   devise (~> 3.2.2)
+  guten-mtgox!
   haml (~> 4.0.4)
   jbuilder (~> 1.0.2)
   jquery-rails (~> 3.0.4)
-  mtgox
   pg
   rails (= 4.0.1)
   sass-rails (~> 4.0.1)

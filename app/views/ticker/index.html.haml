@@ -1,7 +1,7 @@
 #chart.container{ style: 'height: 400px; width: 100%;' }
 
 .row
-  - @markets.each do |market|
+  - @exchanges.each do |market|
     - tick = market.tickers.latest
     .col-4.col-sm-12.col-lg-4
       %h2= market.name
