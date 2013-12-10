@@ -5,16 +5,6 @@ class CreateMarket < ActiveRecord::Migration
       t.string :name
       t.string :code
     end
-
-    btce = Market::BTCE.new
-    btce.name = 'BTC-E'
-    btce.code = 'btce'
-    btce.save
-
-    mtgox = Market::MTGOX.new
-    mtgox.name = 'MT.Gox'
-    mtgox.code = 'mtgox'
-    mtgox.save
   end
 
   def down
