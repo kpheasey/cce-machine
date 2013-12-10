@@ -1,5 +1,5 @@
 namespace :exchanges do
   task :tick => :environment do
-   Market.tick
+    Exchange.tick
   end
 end
