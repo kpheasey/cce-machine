@@ -17,6 +17,7 @@ gem 'uglifier', '~> 2.1.1'
 # BTC Market APIs
 gem 'btce'
 gem 'guten-mtgox', :git => 'git://github.com/GutenYe/mtgox.git'
+gem 'ruby-vircurex', '~> 0.0.3'
 
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'whenever', :require => false

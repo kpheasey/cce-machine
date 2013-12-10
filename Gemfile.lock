@@ -170,6 +170,7 @@ GEM
       json (~> 1.4)
     responders (1.0.0)
       railties (>= 3.2, < 5)
+    ruby-vircurex (0.0.3)
     sass (3.2.12)
     sass-rails (4.0.1)
       railties (>= 4.0.0, < 5.0)
@@ -230,6 +231,7 @@ DEPENDENCIES
   jquery-rails (~> 3.0.4)
   pg
   rails (= 4.0.1)
+  ruby-vircurex (~> 0.0.3)
   sass-rails (~> 4.0.1)
   sdoc
   uglifier (~> 2.1.1)
