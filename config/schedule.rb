@@ -4,7 +4,7 @@
 # http://en.wikipedia.org/wiki/Cron
 
 every 1.minute do
-  rake 'markets:tick'
+  rake 'exchanges:tick'
 end
 
 # Learn more: http://github.com/javan/whenever
