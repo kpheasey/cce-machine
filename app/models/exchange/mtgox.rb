@@ -1,3 +1,5 @@
+require 'mtgox'
+
 class Exchange::MTGOX < Exchange
 
   def tick
