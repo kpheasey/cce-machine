@@ -21,12 +21,10 @@ class Exchange::VIRCUREX < Exchange
       ticker = Ticker.new
       ticker.exchange = self
       ticker.market = exchange_market.market
-      ticker.high = market_tick['highest_bid']
-      ticker.low = market_tick['lowest_ask']
-      ticker.average = (ticker.high + ticker.low) / 2
+      ticker.high = market_tick['lowest_ask']
+      ticker.low = market_tick['highest_bid']
       ticker.volume = market_tick['volume']
-      ticker.buy = market_tick['last_trade']
-      ticker.sell = market_tick['last_trade']
+      ticker.last_trade = market_tick['last_trade']
       ticker.save
     end
   end
