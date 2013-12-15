@@ -1,8 +1,11 @@
 class Exchange < ActiveRecord::Base
-  has_many :tickers
-  has_many :fees
+  has_many :companies
+  has_many :exchange_accounts
   has_many :exchange_markets
+  has_many :fees
   has_many :markets, through: :exchange_markets
+  has_many :tickers
+  has_many :users, through: :exchange_accounts
 
   accepts_nested_attributes_for :fees, allow_destroy: true
 
