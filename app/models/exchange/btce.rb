@@ -28,10 +28,13 @@ class Exchange::BTCE < Exchange
   end
 
   # fetch open orders
-  def fetch_orders
-    self.exchange_markets.each do |exchange_market|
-      set = Order.where(exchange: self, market: exchange_market.market).maximum(:set) || 1
+  def fetch_orders(set = nil)
+    if set.nil?
+      set = Order.where(exchange: self, market: exchange_market.market).maximum(:set) || 0
+      set = set + 1
+    end
 
+    self.exchange_markets.each do |exchange_market|
       orders = Btce::Depth.new(exchange_market.code).json[exchange_market.code]
 
       orders['asks'].each do |source_ask|

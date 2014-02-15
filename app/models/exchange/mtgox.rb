@@ -29,10 +29,13 @@ class Exchange::MTGOX < Exchange
     end
   end
 
-  def fetch_orders
-    self.exchange_markets.each do |exchange_market|
-      set = Order.where(exchange: self, market: exchange_market.market).maximum(:set) || 1
+  def fetch_orders(set = nil)
+    if set.nil?
+      set = Order.where(exchange: self, market: exchange_market.market).maximum(:set) || 0
+      set = set + 1
+    end
 
+    self.exchange_markets.each do |exchange_market|
       MtGox.asks.each do |source_ask|
         Order::Ask.create!(
             market: exchange_market.market,
