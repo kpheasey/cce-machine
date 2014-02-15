@@ -4,7 +4,7 @@ class Exchange < ActiveRecord::Base
   has_many :exchange_markets
   has_many :fees
   has_many :markets, through: :exchange_markets
-  has_many :tickers
+  has_many :trades
   has_many :users, through: :exchange_accounts
 
   accepts_nested_attributes_for :fees, allow_destroy: true
@@ -16,9 +16,9 @@ class Exchange < ActiveRecord::Base
     Exchange.find_by(code: @@exchanges[type])
   end
 
-  def self.tick
+  def self.fetch_trades
     Exchange.all.each do |exchange|
-      exchange.tick
+      exchange.fetch_trades
     end
   end
 

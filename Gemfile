@@ -15,9 +15,8 @@ gem 'jbuilder', '~> 1.0.2'
 gem 'uglifier', '~> 2.1.1'
 
 # BTC Market APIs
-gem 'btce'
-gem 'guten-mtgox', :git => 'git://github.com/GutenYe/mtgox.git'
-gem 'ruby-vircurex', '~> 0.0.3'
+gem 'btce', github: 'kpheasey/ruby-btce'
+gem 'mtgox'
 
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'whenever', :require => false
@@ -25,9 +24,6 @@ gem 'devise', '~> 3.2.2'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.1.2'
-
-# Use Capistrano for deployment
-gem 'capistrano', group: :development
 
 group :development, :test do
   gem 'better_errors'

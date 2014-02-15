@@ -1,12 +1,12 @@
 BtcMarketExchange::Application.routes.draw do
-  root 'ticker#index'
+  root 'trades#index'
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   devise_for :users
   ActiveAdmin.routes(self)
 
-  get '/ticker/chart-data', to: 'ticker#chart_data'
+  get '/trades/chart-data', to: 'trades#chart_data'
 
-  resources :ticker
+  resources :trades
 
 end

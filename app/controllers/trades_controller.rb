@@ -1,4 +1,4 @@
-class TickerController < ApplicationController
+class TradesController < ApplicationController
 
   def index
     @exchanges = Exchange.all

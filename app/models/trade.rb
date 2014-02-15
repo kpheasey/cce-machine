@@ -1,4 +1,4 @@
-class Ticker < ActiveRecord::Base
+class Trade < ActiveRecord::Base
   belongs_to :market
   belongs_to :exchange
 

@@ -4,7 +4,7 @@ development:
   database: btc-market-exchange_development
   pool: 5
   username: Kevin
-  password:
+  password: 247Kevin!88!
 
 test:
   adapter: postgresql
@@ -12,7 +12,7 @@ test:
   database: btc-market-exchange_test
   pool: 5
   username: Kevin
-  password:
+  password: ''
 
 production:
   adapter: postgresql

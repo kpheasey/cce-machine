@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131215191527) do
+ActiveRecord::Schema.define(version: 20140215182846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20131215191527) do
     t.string   "key"
     t.string   "secret"
     t.integer  "exchange_id"
+    t.integer  "company_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -103,19 +104,18 @@ ActiveRecord::Schema.define(version: 20131215191527) do
     t.integer  "target_id"
   end
 
-  create_table "tickers", force: true do |t|
+  create_table "trades", force: true do |t|
+    t.integer  "market_id"
     t.integer  "exchange_id"
-    t.decimal  "high"
-    t.decimal  "low"
-    t.decimal  "average"
-    t.decimal  "volume"
-    t.decimal  "buy"
-    t.decimal  "sell"
+    t.decimal  "price"
+    t.decimal  "amount"
+    t.integer  "exchange_trade_id", limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "market_id"
-    t.decimal  "last_trade"
   end
+
+  add_index "trades", ["exchange_id"], name: "index_trades_on_exchange_id", using: :btree
+  add_index "trades", ["market_id", "exchange_id"], name: "index_trades_on_market_id_and_exchange_id", using: :btree
 
   create_table "user_wallets", force: true do |t|
     t.integer  "user_id"
@@ -155,6 +155,7 @@ ActiveRecord::Schema.define(version: 20131215191527) do
     t.string   "type"
     t.integer  "company_id"
     t.string   "address"
+    t.integer  "currency_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

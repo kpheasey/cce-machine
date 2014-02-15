@@ -2,24 +2,30 @@ require 'mtgox'
 
 class Exchange::MTGOX < Exchange
 
-  def tick
+
+  def fetch_trades
+
     self.exchange_markets.each do |exchange_market|
-      MtGox.configure do |c|
-        c.currency = exchange_market.code.to_sym
+      source_trades = MtGox.trades
+      known_trades = self.trades.where(market: exchange_market.market).pluck(:exchange_trade_id)
+      unknown_trades = []
+
+      source_trades.each do |source|
+        unless known_trades.include? source.id
+          unknown_trades << source
+        end
       end
 
-      response = MtGox.ticker
-
-      ticker = Ticker.new
-      ticker.exchange = self
-      ticker.market = exchange_market.market
-      ticker.high = response.high
-      ticker.low = response.low
-      ticker.average = response.avg
-      ticker.volume = response.vol
-      ticker.buy = response.buy
-      ticker.sell = response.sell
-      ticker.save
+      unknown_trades.each do |source|
+        trade = Trade.find_or_initialize_by(
+            exchange: self,
+            market: exchange_market.market,
+            exchange_trade_id: source.id
+        )
+        trade.price = source.price
+        trade.amount = source.amount
+        trade.save
+      end
     end
   end
 

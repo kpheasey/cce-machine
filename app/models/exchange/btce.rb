@@ -1,19 +1,28 @@
 class Exchange::BTCE < Exchange
 
-  def tick
-    self.exchange_markets.each do |exchange_market|
-      response = Btce::Ticker.new exchange_market.code
+  def fetch_trades
 
-      ticker = Ticker.new
-      ticker.exchange = self
-      ticker.market = exchange_market.market
-      ticker.high = response.high
-      ticker.low = response.low
-      ticker.average = response.avg
-      ticker.volume = response.vol
-      ticker.buy = response.buy
-      ticker.sell = response.sell
-      ticker.save
+    self.exchange_markets.each do |exchange_market|
+      source_trades = Btce::Trades.new(exchange_market.code, { limit: 2000 }).json[exchange_market.code]
+      known_trades = self.trades.where(market: exchange_market.market).pluck(:exchange_trade_id)
+      unknown_trades = []
+
+      source_trades.each do |source|
+        unless known_trades.include? source['tid']
+          unknown_trades << source
+        end
+      end
+
+      unknown_trades.each do |source|
+        trade = Trade.find_or_initialize_by(
+            exchange: self,
+            market: exchange_market.market,
+            exchange_trade_id: source['tid']
+        )
+        trade.price = source['price']
+        trade.amount = source['amount']
+        trade.save
+      end
     end
   end
 
