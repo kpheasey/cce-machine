@@ -1,7 +1,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: btc-market-exchange_development
+  database: ccem_development
   pool: 5
   username: Kevin
   password: 247Kevin!88!
@@ -9,7 +9,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: btc-market-exchange_test
+  database: ccem_test
   pool: 5
   username: Kevin
   password: ''
@@ -17,7 +17,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: btc-market-exchange_production
+  database: ccem_production
   pool: 5
   username: btcdeploy
   password: ovoOGvL7n3dRyU9ZzTey
