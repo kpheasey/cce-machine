@@ -7,6 +7,6 @@ BtcMarketExchange::Application.routes.draw do
 
   get '/trades/chart-data', to: 'trades#chart_data'
 
-  resources :trades
+  resources :trades, only: [:index]
 
 end

@@ -1,15 +1,5 @@
 #chart.container{ style: 'height: 400px; width: 100%;' }
 
-.row
-  - @exchanges.each do |exchange|
-    - tick = exchange.tickers.latest
-    .col-4.col-sm-12.col-lg-4
-      %h2= exchange.name
-      %ul
-        %li= "Average - #{number_to_currency tick.average}"
-        %li= "High - #{number_to_currency tick.high}"
-        %li= "Low - #{number_to_currency tick.low}"
-
 :javascript
   google.load("visualization", "1", {packages:["corechart"]});
   google.setOnLoadCallback(drawChart);

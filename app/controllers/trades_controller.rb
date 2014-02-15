@@ -22,7 +22,7 @@ class TradesController < ApplicationController
       row = [ { v: "Date(#{start_time.year}, #{start_time.month}, #{start_time.day}, #{start_time.hour}, #{start_time.min}, #{start_time.sec})", f: nil} ]
 
       Exchange.all.each do |exchange|
-        avg = exchange.tickers.where('tickers.created_at <= ? AND tickers.created_at >= ?', start_time, end_time).average('tickers.average')
+        avg = exchange.trades.where('trades.date <= ? AND trades.date >= ?', start_time, end_time).average('trades.price')
         row << { v: avg, f: nil}
       end
 
