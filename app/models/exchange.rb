@@ -23,7 +23,7 @@ class Exchange < ActiveRecord::Base
   end
 
   def self.fetch_orders
-    set = Order.where(exchange: self, market: exchange_market.market).maximum(:set) || 0
+    set = Order.maximum(:set) || 0
     set = set + 1
 
     Exchange.all.each do |exchange|
