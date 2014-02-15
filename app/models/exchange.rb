@@ -22,4 +22,10 @@ class Exchange < ActiveRecord::Base
     end
   end
 
+  def self.fetch_orders
+    Exchange.all.each do |exchange|
+      exchange.fetch_orders
+    end
+  end
+
 end

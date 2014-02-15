@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140215182846) do
+ActiveRecord::Schema.define(version: 20140215214828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,12 +104,27 @@ ActiveRecord::Schema.define(version: 20140215182846) do
     t.integer  "target_id"
   end
 
+  create_table "orders", force: true do |t|
+    t.string   "type"
+    t.integer  "market_id"
+    t.integer  "exchange_id"
+    t.decimal  "price"
+    t.decimal  "amount"
+    t.integer  "set"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "orders", ["exchange_id"], name: "index_orders_on_exchange_id", using: :btree
+  add_index "orders", ["market_id", "exchange_id"], name: "index_orders_on_market_id_and_exchange_id", using: :btree
+
   create_table "trades", force: true do |t|
     t.integer  "market_id"
     t.integer  "exchange_id"
     t.decimal  "price"
     t.decimal  "amount"
     t.integer  "exchange_trade_id", limit: 8
+    t.datetime "date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
