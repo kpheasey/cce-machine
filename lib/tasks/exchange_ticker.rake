@@ -1,5 +1,5 @@
 namespace :exchanges do
   task :tick => :environment do
-    Exchange.tick
+    Exchange.fetch_trades
   end
 end

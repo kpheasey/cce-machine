@@ -25,6 +25,13 @@ gem 'devise', '~> 3.2.2'
 # Use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.1.2'
 
+# deployments
+group :development do
+  gem 'capistrano', '~> 3.0'
+  gem 'capistrano-rvm'
+end
+
+# debugging
 group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
