@@ -15,7 +15,7 @@ BtcMarketExchange::Application.routes.draw do
   resources :markets, only: [:index, :show]
   get '/markets/chart-data/:id', to: 'markets#chart_data'
 
-  resources :exchanges, only: [:index, :show]
   get '/exchanges/chart-data/:id', to: 'exchanges#chart_data'
+  get '/exchanges/:id/:market', to: 'exchanges#show', as: 'exchange'
 
 end

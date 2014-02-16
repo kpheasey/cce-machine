@@ -22,6 +22,7 @@ gem 'cryptsy-api', '~> 0.0.6'
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'devise', '~> 3.2.2'
 gem 'friendly_id', '~> 5.0.0'
+gem 'pjax_rails', '~> 0.4.0'
 gem 'sidekiq', '~> 2.17.4'
 gem 'whenever', :require => false
 
