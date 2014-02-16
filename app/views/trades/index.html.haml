@@ -5,7 +5,7 @@
   google.setOnLoadCallback(drawChart);
   function drawChart() {
     var jsonData = $.ajax({
-              url: "/ticker/chart-data",
+              url: "/trades/chart-data",
               dataType:"json",
               async: false
               }).responseText;
