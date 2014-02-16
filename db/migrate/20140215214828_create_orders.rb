@@ -2,7 +2,7 @@ class CreateOrders < ActiveRecord::Migration
   def up
     create_table :orders do |t|
       t.string :type
-      t.references :market
+      t.references :markets
       t.references :exchange
       t.decimal :price
       t.decimal :amount

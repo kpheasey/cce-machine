@@ -1,20 +1,28 @@
 .navbar.navbar-inverse.navbar-fixed-top{ role: 'navigation' }
-  .container
+  .container-fluid
     .navbar-header
       %button.navbar-toggle{ type: 'button', 'data-toggle' => 'collapse', 'data-target' => '.navbar-collapse' }
-      %span.sr-only Toggle navigation
-      %span.icon-bar
-      %span.icon-bar
-      %span.icon-bar
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
       = link_to 'BTC Market Exchange', root_path, class: 'navbar-brand'
+
     .collapse.navbar-collapse
       %ul.nav.navbar-nav
-        %li.active= link_to 'Home', root_path
+        %li= link_to 'Home', root_path
+        %li.dropdown
+          %a.dropdown-toggle{ href: '#', 'data-toggle' => 'dropdown' }
+            Markets
+            %b.caret
+          %ul.dropdown-menu
+            - markets.each do |market|
+              %li= link_to market.name, market_path(market)
 
-      - user = User.new
-      = form_for_with_haml user, :as => user, :url => session_path(user), html: { class: 'navbar-form navbar-right', role: 'form' } do |f|
-        .form-group
-          = f.email_field :email, class: 'form-control', placeholder: 'Email'
-        .form-group
-          = f.password_field :password, class: 'form-control', placeholder: 'Password'
-        = f.submit 'Sign in', class: 'btn btn-success'
+        %li.dropdown
+          %a.dropdown-toggle{ href: '#', 'data-toggle' => 'dropdown' }
+            Exchanges
+            %b.caret
+          %ul.dropdown-menu
+            - exchanges.each do |exchange|
+              %li= link_to exchange.name, exchange_path(exchange)

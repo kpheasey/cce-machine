@@ -9,7 +9,7 @@ gem 'pg'
 # JS, CSS and HTML gems
 gem 'haml', '~> 4.0.4'
 gem 'sass-rails', '~> 4.0.1'
-gem 'bootstrap-sass', '~> 3.0.3.0'
+gem 'bootstrap-sass', '~> 3.1.1.0'
 gem 'jquery-rails', '~> 3.0.4'
 gem 'jbuilder', '~> 1.0.2'
 gem 'uglifier', '~> 2.1.1'

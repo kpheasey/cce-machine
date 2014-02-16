@@ -14,4 +14,12 @@ module ApplicationHelper
     end
   end
 
+  def markets
+    @markets ||= Market.all
+  end
+
+  def exchanges
+    @exchanges || Exchange.all
+  end
+
 end

@@ -33,13 +33,13 @@ class AddDefaults < ActiveRecord::Migration
 
     # add default ExchangeMarkets
     ExchangeMarket.create!(
-        market: Market.find_by(name: 'BTC/USD'),
+        markets: Market.find_by(name: 'BTC/USD'),
         exchange: Exchange.find_by(code: 'btce'),
         code: 'btc_usd'
     )
 
     ExchangeMarket.create!(
-        market: Market.find_by(name: 'BTC/USD'),
+        markets: Market.find_by(name: 'BTC/USD'),
         exchange: Exchange.find_by(code: 'mtgox'),
         code: 'usd'
     )
@@ -60,12 +60,12 @@ class AddDefaults < ActiveRecord::Migration
 
     #remove default ExchangeMarkets
     ExchangeMarket.find_by(
-        market: Market.find_by(name: 'BTC/USD'),
+        markets: Market.find_by(name: 'BTC/USD'),
         exchange: Exchange.find_by(code: 'btce')
     ).destroy
 
     ExchangeMarket.find_by(
-        market: Market.find_by(name: 'BTC/USD'),
+        markets: Market.find_by(name: 'BTC/USD'),
         exchange: Exchange.find_by(code: 'mtgox'),
         code: 'usd'
     ).destroy

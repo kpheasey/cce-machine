@@ -60,7 +60,7 @@ GEM
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bootstrap-sass (3.0.3.0)
+    bootstrap-sass (3.1.1.0)
       sass (~> 3.2)
     bourbon (3.1.8)
       sass (>= 3.2.0)
@@ -217,7 +217,7 @@ DEPENDENCIES
   bcrypt-ruby (~> 3.1.2)
   better_errors
   binding_of_caller
-  bootstrap-sass (~> 3.0.3.0)
+  bootstrap-sass (~> 3.1.1.0)
   btce!
   capistrano (~> 3.0)
   capistrano-rvm
