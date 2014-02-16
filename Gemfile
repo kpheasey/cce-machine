@@ -16,7 +16,8 @@ gem 'uglifier', '~> 2.1.1'
 
 # BTC Market APIs
 gem 'btce', github: 'kpheasey/ruby-btce'
-gem 'mtgox'
+gem 'mtgox', '~> 1.1.0'
+gem 'cryptsy-api', '~> 0.0.6'
 
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'devise', '~> 3.2.2'

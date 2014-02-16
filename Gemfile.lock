@@ -86,6 +86,9 @@ GEM
     coffee-script-source (1.7.0)
     columnize (0.3.6)
     connection_pool (1.2.0)
+    cryptsy-api (0.0.6)
+      httparty
+      json
     debug_inspector (0.0.2)
     debugger (1.6.5)
       columnize (>= 0.3.1)
@@ -113,6 +116,9 @@ GEM
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
     hike (1.2.3)
+    httparty (0.13.0)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.6.9)
     inherited_resources (1.4.1)
       has_scope (~> 0.6.0.rc)
@@ -139,6 +145,7 @@ GEM
       faraday (~> 0.8, < 0.10)
       json (~> 1.7, >= 1.7.7)
     multi_json (1.8.4)
+    multi_xml (0.5.5)
     multipart-post (2.0.0)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
@@ -236,13 +243,14 @@ DEPENDENCIES
   btce!
   capistrano (~> 3.0)
   capistrano-rvm
+  cryptsy-api (~> 0.0.6)
   debugger
   devise (~> 3.2.2)
   friendly_id (~> 5.0.0)
   haml (~> 4.0.4)
   jbuilder (~> 1.0.2)
   jquery-rails (~> 3.0.4)
-  mtgox
+  mtgox (~> 1.1.0)
   pg
   rails (= 4.0.1)
   sass-rails (~> 4.0.1)

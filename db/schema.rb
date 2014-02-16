@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140216163038) do
+ActiveRecord::Schema.define(version: 20140216231745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,14 +92,16 @@ ActiveRecord::Schema.define(version: 20140216163038) do
   add_index "exchanges", ["slug"], name: "index_exchanges_on_slug", unique: true, using: :btree
 
   create_table "fees", force: true do |t|
-    t.integer  "market_id"
     t.decimal  "min"
     t.decimal  "max"
     t.decimal  "fee"
     t.decimal  "discount"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "exchange_market_id"
   end
+
+  add_index "fees", ["exchange_market_id"], name: "index_fees_on_exchange_market_id", using: :btree
 
   create_table "friendly_id_slugs", force: true do |t|
     t.string   "slug",                      null: false

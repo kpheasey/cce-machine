@@ -16,13 +16,6 @@ ActiveAdmin.register Market do
     m.inputs 'Market Details' do
       m.input :name
       m.input :permalink
-      m.has_many :fees do |f|
-        f.input :min
-        f.input :max
-        f.input :fee
-        f.input :discount
-        f.input :_destroy, label: 'Delete this fee', as: :boolean
-      end
     end
     m.actions
   end

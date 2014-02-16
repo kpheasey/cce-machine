@@ -7,9 +7,6 @@ class Market < ActiveRecord::Base
 
   has_many :exchange_markets
   has_many :exchanges, through: :exchange_markets
-  has_many :fees
 
   has_and_belongs_to_many :currencies
-
-  accepts_nested_attributes_for :fees
 end
