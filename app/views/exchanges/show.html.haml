@@ -1,23 +1,23 @@
-- @exchange.markets.each do |market|
-  .container{ id: "chart-#{market.id}", style: 'height: 400px; width: 100%;' }
+- market = @exchange.markets.first
+.container{ id: "chart-#{market.id}", style: 'height: 400px; width: 100%;' }
 
-  :javascript
-    google.load("visualization", "1", {packages:["corechart"]});
-    google.setOnLoadCallback(drawChart);
-    function drawChart() {
-      var jsonData = $.ajax({
-                url: "/exchanges/chart-data/#{@exchange.id}?market=#{market.id}",
-                dataType:"json",
-                async: false
-                }).responseText;
+:javascript
+  google.load("visualization", "1", {packages:["corechart"]});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var jsonData = $.ajax({
+              url: "/exchanges/chart-data/#{@exchange.id}?market=#{market.id}",
+              dataType:"json",
+              async: false
+              }).responseText;
 
-      // Create our data table out of JSON data loaded from server.
-      var data = new google.visualization.DataTable(jsonData);
+    // Create our data table out of JSON data loaded from server.
+    var data = new google.visualization.DataTable(jsonData);
 
-      var options = {
-        title: 'Average #{market.source.name} Price in #{market.target.name}'
-      };
+    var options = {
+      title: 'Average #{market.source.name} Price in #{market.target.name}'
+    };
 
-      var chart = new google.visualization.LineChart(document.getElementById('chart-#{market.id}'));
-      chart.draw(data, options);
-    }
+    var chart = new google.visualization.LineChart(document.getElementById('chart-#{market.id}'));
+    chart.draw(data, options);
+  }

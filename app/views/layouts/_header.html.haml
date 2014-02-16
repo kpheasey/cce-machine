@@ -1,4 +1,4 @@
-.navbar.navbar-inverse.navbar-fixed-top{ role: 'navigation' }
+.navbar.navbar-default.navbar-fixed-top{ role: 'navigation' }
   .container-fluid
     .navbar-header
       %button.navbar-toggle{ type: 'button', 'data-toggle' => 'collapse', 'data-target' => '.navbar-collapse' }
@@ -25,4 +25,4 @@
             %b.caret
           %ul.dropdown-menu
             - exchanges.each do |exchange|
-              %li= link_to exchange.name, exchange_path(exchange)
+              %li= link_to exchange.name, exchange_path(id: exchange, market: exchange.markets.first)

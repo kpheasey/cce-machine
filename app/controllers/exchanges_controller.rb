@@ -5,12 +5,12 @@ class ExchangesController < ApplicationController
   end
 
   def show
-    @exchange = Exchange.find(params[:id])
+    @exchange = Exchange.friendly.find(params[:id])
   end
 
   def chart_data
-    @exchange = Exchange.find(params[:id])
-    @market = Market.find(params[:market])
+    @exchange = Exchange.friendly.find(params[:id])
+    @market = Market.friendly.find(params[:market])
 
     data = {
         cols: [

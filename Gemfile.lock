@@ -102,6 +102,8 @@ GEM
       multipart-post (>= 1.2, < 3)
     formtastic (2.3.0.rc2)
       actionpack (>= 3.0)
+    friendly_id (5.0.3)
+      activerecord (>= 4.0.0)
     haml (4.0.5)
       tilt
     has_scope (0.6.0.rc)
@@ -223,6 +225,7 @@ DEPENDENCIES
   capistrano-rvm
   debugger
   devise (~> 3.2.2)
+  friendly_id (~> 5.0.0)
   haml (~> 4.0.4)
   jbuilder (~> 1.0.2)
   jquery-rails (~> 3.0.4)

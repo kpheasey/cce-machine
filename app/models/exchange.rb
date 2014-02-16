@@ -1,4 +1,7 @@
 class Exchange < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :permalink, use: :slugged
+
   has_many :companies
   has_many :exchange_accounts
   has_many :exchange_markets

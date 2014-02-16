@@ -5,11 +5,11 @@ class MarketsController < ApplicationController
   end
 
   def show
-    @market = Market.find(params[:id])
+    @market = Market.friendly.find(params[:id])
   end
 
   def chart_data
-    @market = Market.find(params[:id])
+    @market = Market.friendly.find(params[:id])
 
     data = {
         cols: [
