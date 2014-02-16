@@ -21,6 +21,7 @@ gem 'mtgox'
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'devise', '~> 3.2.2'
 gem 'friendly_id', '~> 5.0.0'
+gem 'sidekiq', '~> 2.17.4'
 gem 'whenever', :require => false
 
 # Use ActiveModel has_secure_password

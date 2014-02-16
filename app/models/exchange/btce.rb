@@ -3,22 +3,17 @@ class Exchange::BTCE < Exchange
   # fetch past trades
   def fetch_trades
     self.exchange_markets.each do |exchange_market|
-      source_trades = Btce::Trades.new(exchange_market.code, { limit: 2000 }).json[exchange_market.code]
-      known_trades = self.trades.where(market: exchange_market.market).pluck(:exchange_trade_id)
-      unknown_trades = []
+      max_known_id = Trade.where(exchange: self, market: exchange_market.market).maximum(:exchange_trade_id)
 
-      source_trades.each do |source|
-        unless known_trades.include? source['tid']
-          unknown_trades << source
-        end
-      end
+      Btce::Trades.new(exchange_market.code, { limit: 2000 }).json[exchange_market.code].each do |source|
+        next if source['tid'] <= max_known_id
 
-      unknown_trades.each do |source|
         trade = Trade.find_or_initialize_by(
             exchange: self,
             market: exchange_market.market,
             exchange_trade_id: source['tid']
         )
+
         trade.price = source['price']
         trade.amount = source['amount']
         trade.date = DateTime.strptime(source['timestamp'].to_s,'%s')

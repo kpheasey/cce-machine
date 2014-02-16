@@ -22,13 +22,6 @@ namespace :deploy do
     end
   end
 
-  desc 'Create symlink to assets'
-  task :create_symlink do
-    on roles(:app) do
-      execute "ln -s #{shared_path.join('public/system')} #{release_path.join('public/system')}"
-    end
-  end
-
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
@@ -43,4 +36,3 @@ namespace :deploy do
 end
 
 after 'deploy:publishing', 'deploy:restart'
-after 'deploy:finishing', 'deploy:create_symlink'
