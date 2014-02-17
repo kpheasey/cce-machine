@@ -1,8 +1,6 @@
-
-
 .row
   .col-md-9
-    .container{ id: "chart-#{@market.id}", style: 'height: 400px; width: 100%;' }
+    = render partial: 'shared/chart_generator', locals: { exchanges: [@exchange], market: @market }
 
     .row
       .col-md-6= render partial: 'orders_block', locals: { title: 'Sell Orders', market: @market, orders: @asks }
@@ -19,29 +17,3 @@
             .row
               .col-md-6= exchange_market.market.name
               .col-md-6= exchange_market.current_value.round(4)
-
-
-:javascript
-  google.load("visualization", "1", {packages:["corechart"]});
-  google.setOnLoadCallback(drawChart);
-  function drawChart() {
-    var jsonData = $.ajax({
-              url: '/charts/line',
-              data: {
-                exchanges: #{@exchange.id},
-                market: #{@market.id}
-              },
-              dataType:"json",
-              async: false
-              }).responseText;
-
-    // Create our data table out of JSON data loaded from server.
-    var data = new google.visualization.DataTable(jsonData);
-
-    var options = {
-      title: 'Average #{@market.source.name} Price in #{@market.target.name}'
-    };
-
-    var chart = new google.visualization.LineChart(document.getElementById('chart-#{@market.id}'));
-    chart.draw(data, options);
-  }

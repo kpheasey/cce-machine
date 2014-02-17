@@ -14,6 +14,10 @@ gem 'jquery-rails', '~> 3.0.4'
 gem 'jbuilder', '~> 1.0.2'
 gem 'uglifier', '~> 2.1.1'
 
+# date time picker
+gem 'momentjs-rails', '~> 2.5.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 2.1.30'
+
 # BTC Market APIs
 gem 'btce', github: 'kpheasey/ruby-btce'
 gem 'mtgox', '~> 1.1.0'

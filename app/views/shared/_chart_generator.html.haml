@@ -1,0 +1,58 @@
+.row.chart-container
+  #chart.row{ style: 'height: 400px; width: 100%;' }
+
+  %form.form-inline.row{ role: 'form' }
+    .form-group
+      %select.form-control{ value: Time.now, 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'Chart Type'   }
+        - chart_types.each do |action, description|
+          %option{ value: action }= description
+
+    .form-group
+      %label.sr-only{ for: 'chart-generator-start-date' } Start Date
+      %input.form-control#chart-generator-start-date{ type: 'text', placeholder: 'Start Date', 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'Start Date' }
+
+    .form-group
+      %label.sr-only{ for: 'chart-generator-end-date' } End Date
+      %input.form-control#chart-generator-end-date{ type: 'text', placeholder: 'End Date', 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'End Date'  }
+
+    .form-group
+      %label.sr-only{ for: 'chart-generator-points' } Points
+      %input.form-control#chart-generator-points{ type: 'number', placeholder: 'Points', value: 12, min: 2, max: 32, 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'Data Points'  }
+
+    %button.btn.btn-default{ type: 'submit' } Generate Chart
+
+:javascript
+  $('.chart-container select').tooltip();
+  $('.chart-container input').tooltip();
+
+  $('#chart-generator-start-date').datetimepicker({
+    defaultDate: '#{Time.now - 6.hours}'
+  });
+
+  $('#chart-generator-end-date').datetimepicker({
+    defaultDate: '#{Time.now}'
+  });
+
+  google.load('visualization', '1', {packages:['corechart']});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var jsonData = $.ajax({
+              url: '/charts/line',
+              data: {
+                exchanges: '#{exchanges.map{ |e| e.id }.join(',')}',
+                market: #{market.id}
+              },
+              dataType:'json',
+              async: false
+              }).responseText;
+
+    // Create our data table out of JSON data loaded from server.
+    var data = new google.visualization.DataTable(jsonData);
+
+    var options = {
+      title: '#{market.name} Trades'
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart'));
+    chart.draw(data, options);
+  }

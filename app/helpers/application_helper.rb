@@ -19,7 +19,14 @@ module ApplicationHelper
   end
 
   def exchanges
-    @exchanges || Exchange.all
+    @exchanges ||= Exchange.all
+  end
+
+  def chart_types
+    @chart_types ||= {
+        line: 'Line (average)',
+        candlestick: 'Candlestick'
+    }
   end
 
 end
