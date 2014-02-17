@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-BtcMarketExchange::Application.load_tasks
+CryptoCurrencyExchangeMachine::Application.load_tasks

@@ -1,4 +1,4 @@
-BtcMarketExchange::Application.routes.draw do
+CryptoCurrencyExchangeMachine::Application.routes.draw do
   # Friendly Ids
   get 'exchanges/index'
   get 'exchanges/show'

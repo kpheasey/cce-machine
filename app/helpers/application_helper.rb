@@ -5,7 +5,7 @@ module ApplicationHelper
   # @param [String] page_title  Title of the page
   # @return [String]
   def full_title(page_title = '')
-    base_title = 'BTC Exchange'
+    base_title = 'CCE Machine'
 
     if page_title.empty?
       base_title
