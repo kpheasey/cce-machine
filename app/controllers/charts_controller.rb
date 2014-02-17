@@ -4,8 +4,8 @@ class ChartsController < ApplicationController
 
   def line
     @line = Chart::Line.new(
-        @exchanges,
         @market,
+        @exchanges,
         params[:start_date],
         params[:end_date],
         params[:points].to_i
@@ -16,8 +16,8 @@ class ChartsController < ApplicationController
 
   def candlestick
     @candlestick = Chart::Candlestick.new(
-        @exchanges,
         @market,
+        @exchanges,
         params[:start_date],
         params[:end_date],
         params[:points].to_i
@@ -29,7 +29,7 @@ class ChartsController < ApplicationController
   private
 
   def check_params
-    raise 'params[:exchanges] not defined' if params[:exchanges].blank?
+    raise 'params[:exchanges] not defined' if params[:exchanges].nil?
     raise 'params[:market] not defined' if params[:market].blank?
   end
 

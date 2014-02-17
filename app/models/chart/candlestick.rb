@@ -1,8 +1,8 @@
-class Chart::Candlestick <Chart
+class Chart::Candlestick < Chart
 
   def initialize(exchanges, market, start_date = nil, end_date = nil, points = nil)
     super
-    @exchange = @exchanges.first
+    @exchange = @exchanges.empty? ? nil : @exchanges.first
   end
 
   def data
@@ -22,13 +22,18 @@ class Chart::Candlestick <Chart
       end_time = start_time - @interval.seconds
       row = [{ v:"Date(#{start_time.year}, #{start_time.month}, #{start_time.day}, #{start_time.hour}, #{start_time.min}, #{start_time.sec})" }]
 
-      @exchanges.each do |exchange|
-        row_data = Trade.where(exchange_id: exchange.id, market_id: @market.id).where('date <= ? AND date >= ?', start_time, end_time)
-        row << { v: row_data.minimum(:price), f: nil }
-        row << { v: row_data.last.price, f: nil }
-        row << { v: row_data.first.price, f: nil }
-        row << { v: row_data.maximum(:price), f: nil }
+      if @exchange.nil?
+        row_data = Trade.where(market_id: @market.id).where('date < ? AND date >= ?', start_time, end_time)
+      else
+        row_data = Trade.where(exchange_id: exchange.id, market_id: @market.id).where('date < ? AND date >= ?', start_time, end_time)
       end
+
+      next if row_data.empty?
+
+      row << { v: row_data.max_by(&:price).price, f: nil }
+      row << { v: row_data[-1].price, f: nil }
+      row << { v: row_data[0].price, f: nil }
+      row << { v: row_data.min_by(&:price).price, f: nil }
 
       data[:rows] << { c: row }
       start_time = end_time
