@@ -8,7 +8,7 @@ class ChartsController < ApplicationController
         @market,
         params[:start_date],
         params[:end_date],
-        params[:interval]
+        params[:points].to_i
     )
 
     render json: @line_chart.data

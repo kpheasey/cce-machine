@@ -1,27 +1,28 @@
 .row.chart-container
   #chart.row{ style: 'height: 400px; width: 100%;' }
 
-  %form.form-inline.row{ role: 'form' }
+  %form#chart-generator-form.form-inline.row{ role: 'form' }
     .form-group
-      %select.form-control{ value: Time.now, 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'Chart Type'   }
+      %select.form-control#chart-generator-chart-type{ value: Time.now, 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'Chart Type'   }
         - chart_types.each do |action, description|
           %option{ value: action }= description
 
     .form-group
       %label.sr-only{ for: 'chart-generator-start-date' } Start Date
-      %input.form-control#chart-generator-start-date{ type: 'text', placeholder: 'Start Date', 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'Start Date' }
+      %input.form-control#chart-generator-start-date{ type: 'text', placeholder: 'Start Date', 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'Start Date', 'data-format' => 'YYYY/MM/DD hh:mm A/PM' }
 
     .form-group
       %label.sr-only{ for: 'chart-generator-end-date' } End Date
-      %input.form-control#chart-generator-end-date{ type: 'text', placeholder: 'End Date', 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'End Date'  }
+      %input.form-control#chart-generator-end-date{ type: 'text', placeholder: 'End Date', 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'End Date', 'data-format' => 'YYYY/MM/DD hh:mm A/PM'   }
 
     .form-group
       %label.sr-only{ for: 'chart-generator-points' } Points
-      %input.form-control#chart-generator-points{ type: 'number', placeholder: 'Points', value: 12, min: 2, max: 32, 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'Data Points'  }
+      %input#chart-generator-points.form-control#chart-generator-points{ type: 'number', placeholder: 'Points', value: 12, min: 2, max: 32, 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'Data Points'  }
 
     %button.btn.btn-default{ type: 'submit' } Generate Chart
 
 :javascript
+  // setup form elements
   $('.chart-container select').tooltip();
   $('.chart-container input').tooltip();
 
@@ -33,26 +34,54 @@
     defaultDate: '#{Time.now}'
   });
 
+  // form submission
   google.load('visualization', '1', {packages:['corechart']});
-  google.setOnLoadCallback(drawChart);
-  function drawChart() {
-    var jsonData = $.ajax({
-              url: '/charts/line',
-              data: {
-                exchanges: '#{exchanges.map{ |e| e.id }.join(',')}',
-                market: #{market.id}
-              },
-              dataType:'json',
-              async: false
-              }).responseText;
+
+  $('#chart-generator-form').submit(function(event){
+    event.preventDefault();
+
+    type = $('#chart-generator-chart-type').val();
+    start_date = $('#chart-generator-start-date').val();
+    end_date = $('#chart-generator-end-date').val();
+    points = $('#chart-generator-points').val();
+
+    drawChart(type, start_date, end_date, points);
+  });
+
+  // default load of chart
+  $('#chart-generator-form').submit();
+
+  function drawChart(type, start_date, end_date, points) {
+    var jsonData, data, options, chart;
+
+    jsonData = $.ajax({
+      url: '/charts/' + type,
+      data: {
+        exchanges: '#{exchanges.map{ |e| e.id }.join(',')}',
+        market: #{market.id},
+        start_date: start_date,
+        end_date: end_date,
+        points: points
+      },
+      dataType:'json',
+      async: false
+    }).responseText;
 
     // Create our data table out of JSON data loaded from server.
-    var data = new google.visualization.DataTable(jsonData);
+    data = new google.visualization.DataTable(jsonData);
 
-    var options = {
+    options = {
       title: '#{market.name} Trades'
     };
 
-    var chart = new google.visualization.LineChart(document.getElementById('chart'));
+    switch(type) {
+      case 'line':
+        chart = new google.visualization.LineChart(document.getElementById('chart'));
+        break;
+
+      default:
+        chart = new google.visualization.LineChart(document.getElementById('chart'));
+    }
+
     chart.draw(data, options);
   }
