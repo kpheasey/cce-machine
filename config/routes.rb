@@ -1,9 +1,4 @@
 CryptoCurrencyExchangeMachine::Application.routes.draw do
-  # Friendly Ids
-  get 'exchanges/index'
-  get 'exchanges/show'
-  get 'market/index'
-  get 'market/show'
 
   # root
   root 'trades#index'
@@ -14,6 +9,10 @@ CryptoCurrencyExchangeMachine::Application.routes.draw do
 
   # Devise
   devise_for :users
+
+  # Charts
+  get '/charts/line'
+  get '/charts/candlestick'
 
   # resources
   resources :trades, only: [:index]

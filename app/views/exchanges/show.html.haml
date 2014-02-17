@@ -26,7 +26,11 @@
   google.setOnLoadCallback(drawChart);
   function drawChart() {
     var jsonData = $.ajax({
-              url: "/exchanges/chart-data/#{@exchange.id}?market=#{@market.id}",
+              url: '/charts/line',
+              data: {
+                exchanges: #{@exchange.id},
+                market: #{@market.id}
+              },
               dataType:"json",
               async: false
               }).responseText;

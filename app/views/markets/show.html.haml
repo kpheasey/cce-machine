@@ -5,7 +5,11 @@
   google.setOnLoadCallback(drawChart);
   function drawChart() {
     var jsonData = $.ajax({
-              url: "/markets/chart-data/#{@market.id}",
+              url: '/charts/line',
+              data: {
+                exchanges: '#{ExchangeMarket.includes(:exchange).where(market: @market).map{ |em| em.exchange.id }.join(',')}',
+                market: #{@market.id}
+              },
               dataType:"json",
               async: false
               }).responseText;
