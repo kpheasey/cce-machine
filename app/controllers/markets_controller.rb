@@ -5,7 +5,8 @@ class MarketsController < ApplicationController
   end
 
   def show
-    @market = Market.friendly.find(params[:id])
+    @market = Market.friendly.includes(:exchanges).find(params[:id])
+    @exchanges = @market.exchanges
   end
 
 end

@@ -28,7 +28,7 @@
 
   $('#chart-generator-start-date').datetimepicker({
     defaultDate: '#{Time.now - 6.hours}',
-    startDate: '#{ExchangeMarket.find_by(exchange: @exchange, market: @market).created_at.to_time}'
+    startDate: '#{ExchangeMarket.find_by(exchange: exchanges.first, market: market).created_at.to_time}'
   });
 
   $('#chart-generator-end-date').datetimepicker({
