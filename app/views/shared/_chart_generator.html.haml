@@ -68,13 +68,16 @@
     // Create our data table out of JSON data loaded from server.
     data = new google.visualization.DataTable(jsonData);
 
-    options = {
-      title: '#{market.name} Trades'
-    };
+    options = { title: '#{market.name} Trades' };
 
     switch(type) {
       case 'line':
         chart = new google.visualization.LineChart(document.getElementById('chart'));
+        break;
+
+      case 'candlestick':
+        options['legend'] = 'none'
+        chart = new google.visualization.CandlestickChart(document.getElementById('chart'));
         break;
 
       default:

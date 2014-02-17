@@ -24,8 +24,8 @@ module ApplicationHelper
 
   def chart_types
     @chart_types ||= {
-        line: 'Line (average)',
-        candlestick: 'Candlestick'
+      candlestick: 'Candlestick',
+      line: 'Line (average)'
     }
   end
 

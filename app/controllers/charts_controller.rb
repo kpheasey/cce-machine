@@ -3,7 +3,7 @@ class ChartsController < ApplicationController
   respond_to :json
 
   def line
-    @line_chart = Chart::Line.new(
+    @line = Chart::Line.new(
         @exchanges,
         @market,
         params[:start_date],
@@ -11,11 +11,19 @@ class ChartsController < ApplicationController
         params[:points].to_i
     )
 
-    render json: @line_chart.data
+    render json: @line.data
   end
 
   def candlestick
+    @candlestick = Chart::Candlestick.new(
+        @exchanges,
+        @market,
+        params[:start_date],
+        params[:end_date],
+        params[:points].to_i
+    )
 
+    render json: @candlestick.data
   end
 
   private
