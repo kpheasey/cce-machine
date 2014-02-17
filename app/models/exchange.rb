@@ -29,11 +29,8 @@ class Exchange < ActiveRecord::Base
   end
 
   def self.fetch_orders
-    set = Order.maximum(:set) || 0
-    set = set + 1
-
     Exchange.all.each do |exchange|
-      exchange.fetch_orders(set)
+      exchange.fetch_orders
     end
   end
 

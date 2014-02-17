@@ -23,34 +23,31 @@ class Exchange::BTCE < Exchange
   end
 
   # fetch open orders
-  def fetch_orders(set = nil)
-    if set.nil?
-      set = Order.where(exchange: self, market: exchange_market.market).maximum(:set) || 0
-      set = set + 1
-    end
-
+  def fetch_orders
     self.exchange_markets.each do |exchange_market|
-      orders = Btce::Depth.new(exchange_market.code).json[exchange_market.code]
+      source_orders = Btce::Depth.new(exchange_market.code).json[exchange_market.code]
+      new_orders = []
 
-      orders['asks'].each do |source_ask|
-        Order::Ask.create!(
+      source_orders['asks'].each do |source_ask|
+        new_orders << Order::Ask.create!(
             market: exchange_market.market,
             exchange: self,
             price: source_ask[0],
-            amount: source_ask[1],
-            set: set
+            amount: source_ask[1]
         )
       end
 
-      orders['bids'].each do |source_bid|
-        Order::Bid.create!(
+      source_orders['bids'].each do |source_bid|
+        new_orders << Order::Bid.create!(
             market: exchange_market.market,
             exchange: self,
             price: source_bid[0],
-            amount: source_bid[1],
-            set: set
+            amount: source_bid[1]
         )
       end
+
+      Order.where(exchange: self, market: exchange_market.market).
+          where('id NOT IN (?)', new_orders.map{ |o| o.id }).destroy_all
     end
   end
 

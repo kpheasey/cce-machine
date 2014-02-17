@@ -25,31 +25,29 @@ class Exchange::MTGOX < Exchange
   end
 
   def fetch_orders(set = nil)
-    if set.nil?
-      set = Order.where(exchange: self, market: exchange_market.market).maximum(:set) || 0
-      set = set + 1
-    end
-
     self.exchange_markets.each do |exchange_market|
+      new_orders = []
+
       MtGox.asks.each do |source_ask|
-        Order::Ask.create!(
+        new_orders << Order::Ask.create!(
             market: exchange_market.market,
             exchange: self,
             price: source_ask.price,
-            amount: source_ask.amount,
-            set: set
+            amount: source_ask.amount
         )
       end
 
       MtGox.bids.each do |source_bid|
-        Order::Bid.create!(
+        new_orders << Order::Bid.create!(
             market: exchange_market.market,
             exchange: self,
             price: source_bid.price,
-            amount: source_bid.amount,
-            set: set
+            amount: source_bid.amount
         )
       end
+
+      Order.where(exchange: self, market: exchange_market.market).
+          where('id NOT IN (?)', new_orders.map{ |o| o.id }).destroy_all
     end
   end
 
