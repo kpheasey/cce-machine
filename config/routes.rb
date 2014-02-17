@@ -1,14 +1,21 @@
 BtcMarketExchange::Application.routes.draw do
-  get "exchanges/index"
-  get "exchanges/show"
-  get "market/index"
-  get "market/show"
+  # Friendly Ids
+  get 'exchanges/index'
+  get 'exchanges/show'
+  get 'market/index'
+  get 'market/show'
+
+  # root
   root 'trades#index'
 
+  # Active Admin
   devise_for :admin_users, ActiveAdmin::Devise.config
-  devise_for :users
   ActiveAdmin.routes(self)
 
+  # Devise
+  devise_for :users
+
+  # resources
   resources :trades, only: [:index]
   get '/trades/chart-data', to: 'trades#chart_data'
 

@@ -7,6 +7,9 @@ class Exchange < ActiveRecord::Base
   has_many :exchange_markets
   has_many :fees
   has_many :markets, through: :exchange_markets
+  has_many :orders
+  has_many :order_asks, class_name: 'Order::Ask'
+  has_many :order_bids, class_name: 'Order::Bid'
   has_many :trades
   has_many :users, through: :exchange_accounts
 
