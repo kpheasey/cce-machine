@@ -27,7 +27,8 @@
   $('.chart-container input').tooltip();
 
   $('#chart-generator-start-date').datetimepicker({
-    defaultDate: '#{Time.now - 6.hours}'
+    defaultDate: '#{Time.now - 6.hours}',
+    startDate: '#{ExchangeMarket.find_by(exchange: @exchange, market: @market).created_at.to_time}'
   });
 
   $('#chart-generator-end-date').datetimepicker({
@@ -47,9 +48,6 @@
 
     drawChart(type, start_date, end_date, points);
   });
-
-  // default load of chart
-  $('#chart-generator-form').submit();
 
   function drawChart(type, start_date, end_date, points) {
     var jsonData, data, options, chart;
@@ -85,3 +83,8 @@
 
     chart.draw(data, options);
   }
+
+  $(document).ready(function(){
+    // default load of chart
+    $('#chart-generator-form').submit();
+  });
