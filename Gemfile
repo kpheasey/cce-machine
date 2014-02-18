@@ -19,7 +19,7 @@ gem 'momentjs-rails', '~> 2.5.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 2.1.30'
 
 # BTC Market APIs
-gem 'btce', github: 'kpheasey/ruby-btce'
+gem 'btce', '~> 0.5.0'
 gem 'mtgox', '~> 1.1.0'
 gem 'cryptsy-api', '~> 0.0.6'
 
