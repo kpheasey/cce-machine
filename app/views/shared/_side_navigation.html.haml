@@ -4,8 +4,12 @@
   %h4 Exchanges
   %ul.nav.nav-sidebar
     - Exchange.all.each do |exchange|
-      %li{ class: ( 'active' if current_exchange == exchange) }
-        = link_to exchange.name, exchange_path(id: exchange, market: current_market)
+      - if current_exchange == exchange
+        %li.active
+          = link_to(exchange.name, market_path(current_market))
+      -else
+        %li
+          = link_to(exchange.name, exchange_path(id: exchange, market: current_market))
 
 
   // markets
