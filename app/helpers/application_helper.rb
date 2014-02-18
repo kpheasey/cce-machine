@@ -29,4 +29,12 @@ module ApplicationHelper
     }
   end
 
+  def current_exchange
+    @current_exchange ||= nil
+  end
+
+  def current_market
+    @current_market ||= Market.default
+  end
+
 end

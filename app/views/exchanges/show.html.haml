@@ -1,19 +1,5 @@
+= render partial: 'shared/chart_generator', locals: { exchanges: [current_exchange], market: current_market }
+
 .row
-  .col-md-9
-    = render partial: 'shared/chart_generator', locals: { exchanges: [@exchange], market: @market }
-
-    .row
-      .col-md-6= render partial: 'orders_block', locals: { title: 'Sell Orders', market: @market, orders: @asks }
-      .col-md-6= render partial: 'orders_block', locals: { title: 'Buy Orders', market: @market, orders: @bids }
-
-  .col-md-3
-    .panel.panel-default.exchange-markets-list
-      .panel-heading
-        %h3.panel-title= "#{@exchange.name} Markets"
-
-      .list-group
-        - @exchange.exchange_markets.each do |exchange_market|
-          = link_to exchange_path(id: @exchange, market: exchange_market.market), { class: 'list-group-item' } do
-            .row
-              .col-md-6= exchange_market.market.name
-              .col-md-6= exchange_market.current_value.round(4)
+  .col-md-6= render partial: 'orders_block', locals: { title: 'Sell Orders', market: current_market, orders: @asks }
+  .col-md-6= render partial: 'orders_block', locals: { title: 'Buy Orders', market: current_market, orders: @bids }

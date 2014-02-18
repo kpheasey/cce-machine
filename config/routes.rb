@@ -1,7 +1,7 @@
 CryptoCurrencyExchangeMachine::Application.routes.draw do
 
   # root
-  root 'trades#index'
+  root 'markets#show', id: Market.default
 
   # Active Admin
   devise_for :admin_users, ActiveAdmin::Devise.config

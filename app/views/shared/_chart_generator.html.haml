@@ -1,25 +1,24 @@
-.row.chart-container
-  #chart.row{ style: 'height: 400px; width: 100%;' }
+#chart.row{ style: 'height: 400px; width: 100%;' }
 
-  %form#chart-generator-form.form-inline.row{ role: 'form' }
-    .form-group
-      %select.form-control#chart-generator-chart-type{ value: Time.now, 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'Chart Type'   }
-        - chart_types.each do |action, description|
-          %option{ value: action }= description
+%form#chart-generator-form.form-inline.row{ role: 'form' }
+  .form-group
+    %select.form-control#chart-generator-chart-type{ value: Time.now, 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'Chart Type'   }
+      - chart_types.each do |action, description|
+        %option{ value: action }= description
 
-    .form-group
-      %label.sr-only{ for: 'chart-generator-start-date' } Start Date
-      %input.form-control#chart-generator-start-date{ type: 'text', placeholder: 'Start Date', 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'Start Date', 'data-format' => 'YYYY/MM/DD hh:mm A/PM' }
+  .form-group
+    %label.sr-only{ for: 'chart-generator-start-date' } Start Date
+    %input.form-control#chart-generator-start-date{ type: 'text', placeholder: 'Start Date', 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'Start Date', 'data-format' => 'YYYY/MM/DD hh:mm A/PM' }
 
-    .form-group
-      %label.sr-only{ for: 'chart-generator-end-date' } End Date
-      %input.form-control#chart-generator-end-date{ type: 'text', placeholder: 'End Date', 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'End Date', 'data-format' => 'YYYY/MM/DD hh:mm A/PM'   }
+  .form-group
+    %label.sr-only{ for: 'chart-generator-end-date' } End Date
+    %input.form-control#chart-generator-end-date{ type: 'text', placeholder: 'End Date', 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'End Date', 'data-format' => 'YYYY/MM/DD hh:mm A/PM'   }
 
-    .form-group
-      %label.sr-only{ for: 'chart-generator-points' } Points
-      %input#chart-generator-points.form-control#chart-generator-points{ type: 'number', placeholder: 'Points', value: 12, min: 2, max: 32, 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'Data Points'  }
+  .form-group
+    %label.sr-only{ for: 'chart-generator-points' } Points
+    %input#chart-generator-points.form-control#chart-generator-points{ type: 'number', placeholder: 'Points', value: 12, min: 2, max: 32, 'data-toggle' => 'tooltip', 'data-placement' => 'top', title: 'Data Points'  }
 
-    %button.btn.btn-default{ type: 'submit' } Generate Chart
+  %button.btn.btn-default{ type: 'submit' } Generate Chart
 
 :javascript
   // setup form elements

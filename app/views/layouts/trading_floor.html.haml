@@ -12,12 +12,15 @@
 
     #main.container
       .container-fluid
-        - flash.each do |key, value|
-          .alert{ class: "alert-#{key}" }= value
-
         .row
-          = yield
+          = render partial: 'shared/side_navigation'
+          .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
 
-        = debug(params) if Rails.env.development?
+            - flash.each do |key, value|
+              .alert{ class: "alert-#{key}" }= value
+
+            = yield
+
+            = debug(params) if Rails.env.development?
 
     = render partial: 'shared/footer'

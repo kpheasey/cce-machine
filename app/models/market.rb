@@ -9,4 +9,18 @@ class Market < ActiveRecord::Base
   has_many :exchanges, through: :exchange_markets
 
   has_and_belongs_to_many :currencies
+
+  after_save :make_default
+
+  scope :default, -> { find_by(is_default: true) }
+
+  def make_default
+    if self.is_default
+      Market.where('id != ?', self.id).update_all(is_default: false)
+    end
+  end
+
+  def current_value
+    Trade.where(market: self).order('date DESC').limit(1).first.price
+  end
 end
