@@ -8,7 +8,7 @@ CryptoCurrencyExchangeMachine::Application.routes.draw do
   ActiveAdmin.routes(self)
 
   # Devise
-  devise_for :users
+  devise_for :user
 
   # Charts
   get '/charts/line'
@@ -23,5 +23,9 @@ CryptoCurrencyExchangeMachine::Application.routes.draw do
 
   get '/exchanges/chart-data/:id', to: 'exchanges#chart_data'
   get '/exchanges/:id/:market', to: 'exchanges#show', as: 'exchange'
+
+  namespace :user do
+    resources :exchanges
+  end
 
 end
