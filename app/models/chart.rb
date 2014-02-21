@@ -1,7 +1,7 @@
 class Chart
 
   attr_accessor :exchanges, :market, :start_date, :end_date, :points
-  attr_reader :exchange, :interval
+  attr_reader :interval
 
   def initialize(market, exchanges = [], start_date = nil, end_date = nil, points = nil)
     @exchanges = (exchanges.is_a?(Array) || exchanges.is_a?(ActiveRecord::Relation)) ? exchanges : [exchanges]
