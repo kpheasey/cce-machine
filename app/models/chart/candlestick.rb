@@ -2,10 +2,6 @@ class Chart::Candlestick < Chart
 
   attr_reader :exchanges_trades, :trades
 
-  def initialize(exchanges, market, start_date = nil, end_date = nil, points = nil)
-    super
-  end
-
   def data
     data = {
         cols: [
