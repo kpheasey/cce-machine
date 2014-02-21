@@ -12,6 +12,7 @@ class Market < ActiveRecord::Base
 
   after_save :make_default
 
+  scope :active, -> { where(is_active: true) }
   scope :default, -> { find_by(is_default: true) }
 
   def make_default

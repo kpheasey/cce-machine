@@ -15,6 +15,8 @@ class Exchange < ActiveRecord::Base
 
   accepts_nested_attributes_for :fees, allow_destroy: true
 
+  scope :active, -> { where(is_active: true) }
+
   @@exchanges = { btce: 'btce', mtgox: 'mtgox' }
 
   def self.create type
