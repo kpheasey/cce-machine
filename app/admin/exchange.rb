@@ -9,6 +9,7 @@ ActiveAdmin.register Exchange do
 
   index do
     column :name
+    column :is_active
     default_actions
   end
 
@@ -16,6 +17,7 @@ ActiveAdmin.register Exchange do
     e.inputs 'Exchange Details' do
       e.input :name
       e.input :permalink
+      e.input :is_active
     end
     e.actions
   end

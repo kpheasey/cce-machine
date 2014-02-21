@@ -9,6 +9,7 @@ ActiveAdmin.register Market do
 
   index do
     column :name
+    column :is_active
     default_actions
   end
 
@@ -16,6 +17,7 @@ ActiveAdmin.register Market do
     m.inputs 'Market Details' do
       m.input :name
       m.input :permalink
+      m.input :is_active
     end
     m.actions
   end
