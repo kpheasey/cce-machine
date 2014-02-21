@@ -21,7 +21,14 @@ class Market < ActiveRecord::Base
     end
   end
 
-  def current_value
-    Trade.where(market: self).order('date DESC').limit(1).first.price
+  def current_value(exchange = nil)
+    if exchange.nil?
+      trade = Trade.where(market: self)
+    else
+      trade = Trade.where(market: self, exchange: exchange)
+    end
+
+    return trade.order('date DESC').limit(1).first.price
   end
+
 end

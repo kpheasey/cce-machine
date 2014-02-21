@@ -5,11 +5,17 @@
   %ul.nav.nav-sidebar
     - Exchange.all.each do |exchange|
       - if current_exchange == exchange
-        %li.active
-          = link_to(exchange.name, market_path(current_market))
+        %li{ class: ('active' if current_exchange == exchange) }
+          = link_to market_path(current_market) do
+            .row
+              .col-md-6= exchange.name
+              .col-md-6= current_market.current_value(exchange).round(4)
       -else
         %li
-          = link_to(exchange.name, exchange_path(id: exchange, market: current_market))
+          = link_to exchange_path(id: exchange, market: current_market) do
+            .row
+              .col-md-6= exchange.name
+              .col-md-6= current_market.current_value(exchange).round(4)
 
 
   // markets

@@ -14,7 +14,7 @@
     #main.container
       .container-fluid
         .row
-          = render partial: 'shared/side_navigation'
+          = render 'layouts/exchange_market_side_navigation'
           .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
 
             - flash.each do |key, value|

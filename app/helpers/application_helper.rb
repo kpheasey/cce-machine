@@ -15,11 +15,11 @@ module ApplicationHelper
   end
 
   def markets
-    @markets ||= Market.all
+    @markets ||= Market.active
   end
 
   def exchanges
-    @exchanges ||= Exchange.all
+    @exchanges ||= Exchange.active
   end
 
   def chart_types
