@@ -89,7 +89,7 @@ GEM
     coffee-script-source (1.7.0)
     columnize (0.3.6)
     connection_pool (1.2.0)
-    cryptsy-api (0.0.6)
+    cryptsy-api (0.1.1)
       httparty
       json
     debug_inspector (0.0.2)
@@ -254,7 +254,7 @@ DEPENDENCIES
   capistrano-bundler (~> 1.1.2)
   capistrano-rails (~> 1.1)
   capistrano-rvm
-  cryptsy-api (~> 0.0.6)
+  cryptsy-api (~> 0.1.1)
   debugger
   devise (~> 3.2.2)
   friendly_id (~> 5.0.0)

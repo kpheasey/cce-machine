@@ -17,7 +17,7 @@ class Exchange < ActiveRecord::Base
 
   scope :active, -> { where(is_active: true) }
 
-  @@exchanges = { btce: 'btce', mtgox: 'mtgox' }
+  @@exchanges = { btce: 'btce', mtgox: 'mtgox', cryptsy: 'cryptsy' }
 
   def self.create type
     raise "Bad market type: #{type}" unless @@exchanges.has_key?(type)
