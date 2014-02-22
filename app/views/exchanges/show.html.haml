@@ -3,3 +3,9 @@
 .row
   .col-md-6= render partial: 'orders_block', locals: { title: 'Sell Orders', market: current_market, orders: @sell_orders }
   .col-md-6= render partial: 'orders_block', locals: { title: 'Buy Orders', market: current_market, orders: @buy_orders }
+
+:coffeescript
+  source = new EventSource('/trades/stream')
+  source.addEventListener 'trades.create', (e) ->
+    trade = $.parseJSON(e.data)
+    console.log trade

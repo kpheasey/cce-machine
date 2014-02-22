@@ -273,6 +273,7 @@ DEPENDENCIES
   pjax_rails (~> 0.4.0)
   puma
   rails (= 4.0.3)
+  redis (~> 3.0.7)
   sass-rails (~> 4.0.1)
   sdoc
   sidekiq (~> 2.17.4)

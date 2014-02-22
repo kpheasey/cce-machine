@@ -15,14 +15,9 @@ CryptoCurrencyExchangeMachine::Application.routes.draw do
   get '/charts/candlestick'
 
   # resources
-  resources :trades, only: [:index]
-  get '/trades/chart-data', to: 'trades#chart_data'
-
-  resources :markets, only: [:index, :show]
-  get '/markets/chart-data/:id', to: 'markets#chart_data'
-
-  get '/exchanges/chart-data/:id', to: 'exchanges#chart_data'
   get '/exchanges/:id/:market', to: 'exchanges#show', as: 'exchange'
+  resources :markets, only: [:index, :show]
+  get '/trades/stream', to: 'trades#stream'
 
   namespace :user do
     resources :exchanges

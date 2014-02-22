@@ -1,37 +1,20 @@
 class TradesController < ApplicationController
+  include ActionController::Live
 
-  def index
-    @exchanges = Exchange.all
-  end
-
-  def chart_data
-    data = {
-        cols: [
-            { id: '', label: 'Time', pattern: '', type: 'datetime' }
-        ],
-        rows: []
-    }
-
-    Exchange.all.each do |exchange|
-      data[:cols] << { id: '', label: exchange.name, pattern: '', type: 'number'}
-    end
-
-    start_time = Time.now
-    12.times do
-      end_time = start_time - 30.minutes
-      row = [ { v: "Date(#{start_time.year}, #{start_time.month}, #{start_time.day}, #{start_time.hour}, #{start_time.min}, #{start_time.sec})", f: nil} ]
-
-      Exchange.all.each do |exchange|
-        avg = exchange.trades.where(market: Market.find_by(name: 'BTC/USD')).where('trades.date <= ? AND trades.date >= ?', start_time, end_time).average('trades.price')
-        row << { v: avg, f: nil}
+  def stream
+    response.headers['Content-Type'] = 'text/event-stream'
+    redis = Redis.new
+    redis.subscribe('trades.create') do |on|
+      on.message do |event, trade|
+        response.stream.write("event: #{event}\n")
+        response.stream.write("data: #{trade}\n\n")
       end
-
-      data[:rows] << { c: row }
-
-      start_time = end_time
     end
-
-    render json: data.to_json
+  rescue IOError
+    logger.info 'Stream closed'
+  ensure
+    redis.quit
+    response.stream.close
   end
 
 end
