@@ -8,7 +8,7 @@
     %script{ src: 'https://www.google.com/jsapi' }
     = csrf_meta_tags
 
-  %body
+  %body{data: {page: [controller_name.capitalize, action_name.capitalize].join}}
     = render 'layouts/header'
 
     #main.container

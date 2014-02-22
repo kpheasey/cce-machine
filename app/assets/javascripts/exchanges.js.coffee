@@ -1,3 +1,10 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+window.App ||= {}
+class App.Exchanges extends App.Base
+
+  constructor: () ->
+    super
+    # Run on every Exchanges controller action
+
+    this
+
+  show: () ->

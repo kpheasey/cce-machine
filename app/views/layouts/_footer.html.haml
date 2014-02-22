@@ -1,3 +1,11 @@
 %nav.navbar.navbar-default{ role: 'navigation' }
   .container
     %p.navbar-text.navbar-right= "&copy; #{Time.new.year} Kevin Pheasey".html_safe
+
+:javascript
+  jQuery(function() {
+    window.$M = new (App.#{params[:controller].capitalize} || App.Base)(#{@bootstrap_data});
+    if (typeof $M.#{params[:action]} === 'function') {
+      return $M.#{params[:action]}.call();
+    }
+  });
