@@ -12,7 +12,6 @@ class Trade < ActiveRecord::Base
     connection.execute 'LISTEN trades_create'
     loop do
       ActiveRecord::Base.connection.raw_connection.wait_for_notify do |event, pid, trade|
-        Rails.logger.info "LISTEN: #{trade}"
         yield trade
       end
     end

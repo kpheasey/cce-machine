@@ -11,7 +11,7 @@ class TradesController < ApplicationController
       end
     end
   rescue IOError
-    logger.info 'Stream closed'
+    # stream closed
   ensure
     redis.quit
     response.stream.close
