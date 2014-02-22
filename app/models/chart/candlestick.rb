@@ -63,7 +63,7 @@ class Chart::Candlestick < Chart
   end
 
   def multiple_exchange_row(row, start_time, end_time)
-    @trades = Trade.includes(:exchange).where(exchange: @exchanges.first, market: @market).where('date < ? AND date >= ?', start_time, end_time)
+    @trades = Trade.includes(:exchange).where(trades: @exchanges.first, market: @market).where('date < ? AND date >= ?', start_time, end_time)
 
     return nil if trades.empty?
 

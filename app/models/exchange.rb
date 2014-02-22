@@ -24,6 +24,12 @@ class Exchange < ActiveRecord::Base
     Exchange.find_by(code: @@exchanges[type])
   end
 
+  def self.tick
+    Exchange.all.each do |exchange|
+      exchange.tick
+    end
+  end
+
   def self.fetch_trades
     Exchange.all.each do |exchange|
       exchange.fetch_trades

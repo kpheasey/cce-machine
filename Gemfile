@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Rails
-gem 'rails', '4.0.1'
+gem 'rails', '4.0.3'
 
 # PostrgeSQL DBMS
 gem 'pg'
@@ -21,18 +21,16 @@ gem 'bootstrap3-datetimepicker-rails', '~> 2.1.30'
 # BTC Market APIs
 gem 'btce', '~> 0.5.0'
 gem 'mtgox', '~> 1.1.0'
-gem 'cryptsy-api', '~> 0.1.1'
+gem 'cryptsy-api', github: 'kpheasey/cryptsy-api'
 
-
+# General gems
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'devise', '~> 3.2.2'
 gem 'friendly_id', '~> 5.0.0'
 gem 'pjax_rails', '~> 0.4.0'
+gem 'puma'
 gem 'sidekiq', '~> 2.17.4'
 gem 'whenever', require: false
-
-# Use ActiveModel has_secure_password
-gem 'bcrypt-ruby', '~> 3.1.2'
 
 # deployments
 group :development do
@@ -46,9 +44,8 @@ end
 group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'debugger'
 end
-
-gem 'debugger', group: [:development, :test]
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
