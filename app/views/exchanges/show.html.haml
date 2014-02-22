@@ -1,5 +1,5 @@
 = render partial: 'shared/chart_generator', locals: { exchanges: [current_exchange], market: current_market }
 
 .row
-  .col-md-6= render partial: 'orders_block', locals: { title: 'Sell Orders', market: current_market, orders: @asks }
-  .col-md-6= render partial: 'orders_block', locals: { title: 'Buy Orders', market: current_market, orders: @bids }
+  .col-md-6= render partial: 'orders_block', locals: { title: 'Sell Orders', market: current_market, orders: @sell_orders }
+  .col-md-6= render partial: 'orders_block', locals: { title: 'Buy Orders', market: current_market, orders: @buy_orders }

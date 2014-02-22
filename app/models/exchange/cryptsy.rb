@@ -35,7 +35,7 @@ class Exchange::CRYPTSY < Exchange
       new_orders = []
 
       source_orders['sellorders'].each do |source_ask|
-        new_orders << Order::Ask.create!(
+        new_orders << Order::Sell.create!(
             market: exchange_market.market,
             exchange: self,
             price: source_ask[0],
@@ -44,7 +44,7 @@ class Exchange::CRYPTSY < Exchange
       end
 
       source_orders['buyorders'].each do |source_bid|
-        new_orders << Order::Bid.create!(
+        new_orders << Order::Buy.create!(
             market: exchange_market.market,
             exchange: self,
             price: source_bid[0],

@@ -29,7 +29,7 @@ class Exchange::MTGOX < Exchange
       new_orders = []
 
       MtGox.asks.each do |source_ask|
-        new_orders << Order::Ask.create!(
+        new_orders << Order::Sell.create!(
             market: exchange_market.market,
             exchange: self,
             price: source_ask.price,
@@ -38,7 +38,7 @@ class Exchange::MTGOX < Exchange
       end
 
       MtGox.bids.each do |source_bid|
-        new_orders << Order::Bid.create!(
+        new_orders << Order::Buy.create!(
             market: exchange_market.market,
             exchange: self,
             price: source_bid.price,
