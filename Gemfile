@@ -32,6 +32,7 @@ gem 'pjax_rails', '~> 0.4.0'
 gem 'puma'
 gem 'redis', '~> 3.0.7'
 gem 'sidekiq', '~> 2.17.4'
+gem 'sinatra', require: false
 gem 'whenever', require: false
 
 # deployments

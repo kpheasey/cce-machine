@@ -9,6 +9,9 @@ CryptoCurrencyExchangeMachine::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
+  # Sidekiq
+  mount Sidekiq::Web, at: '/sidekiq'
+
   # Devise
   devise_for :user
 
