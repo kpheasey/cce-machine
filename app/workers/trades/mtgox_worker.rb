@@ -3,7 +3,7 @@ class Trades::MtgoxWorker
 
   def perform(exchange_market_id)
     exchange_market = ExchangeMarket.includes(:exchange, :market).find(exchange_market_id)
-    max_known_id = Trade.where(exchange: exchange_market.exchange, market: exchange_market.market).maximum(:exchange_trade_id)
+    max_known_id = exchange_market.max_id
 
     MtGox.trades.each do |source|
       next if source.id <= max_known_id
