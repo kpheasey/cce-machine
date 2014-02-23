@@ -3,14 +3,14 @@ class Exchange < ActiveRecord::Base
   friendly_id :permalink, use: :slugged
 
   has_many :companies
-  has_many :exchange_accounts
-  has_many :exchange_markets
+  has_many :exchange_accounts, dependent: :destroy
+  has_many :exchange_markets, dependent: :destroy
   has_many :fees
   has_many :markets, through: :exchange_markets
   has_many :orders
-  has_many :order_sells, class_name: 'Order::Sell'
-  has_many :order_buys, class_name: 'Order::Buy'
-  has_many :trades
+  has_many :order_sells, class_name: 'Order::Sell', dependent: :destroy
+  has_many :order_buys, class_name: 'Order::Buy', dependent: :destroy
+  has_many :trades, dependent: :destroy
   has_many :users, through: :exchange_accounts
 
   accepts_nested_attributes_for :fees, allow_destroy: true
