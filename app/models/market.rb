@@ -5,11 +5,9 @@ class Market < ActiveRecord::Base
   belongs_to :source, class_name: 'Currency'
   belongs_to :target, class_name: 'Currency'
 
-  has_many :exchange_markets
+  has_many :exchange_markets, dependent: :destroy
   has_many :exchanges, through: :exchange_markets
-  has_many :trades
-
-  has_and_belongs_to_many :currencies
+  has_many :trades, dependent: :destroy
 
   after_save :make_default
 
@@ -24,7 +22,11 @@ class Market < ActiveRecord::Base
       trade = Trade.where(market: self, exchange: exchange)
     end
 
-    return trade.order('date DESC').limit(1).first.price
+    trade = trade.order('date DESC').limit(1).first
+
+    unless trade.nil?
+      return trade.price
+    end
   end
 
   private

@@ -2,7 +2,8 @@ class Exchange::CRYPTSY < Exchange
 
   attr_reader :api
 
-  def initialize
+  def initialize(attributes = {})
+    super
     @api = Cryptsy::API::Client.new
   end
 

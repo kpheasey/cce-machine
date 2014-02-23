@@ -1,18 +1,20 @@
 class DestroyMtGox < ActiveRecord::Migration
   def up
-    Exchange.find_by(code: 'mtgox').destroy
+    exchange = Exchange.find_by(code: 'mtgox')
+    Trade.where(exchange: exchange).destroy_all
+    Order.where(exchange: exchange).destroy_all
+    exchange.destroy
   end
 
   def down
-    Exchange.create!(
-        type: 'Exchange::MTGOX',
+    Exchange::MTGOX.create!(
         name: 'MT.Gox',
         code: 'mtgox'
     )
 
     ExchangeMarket.create!(
-        markets: Market.find_by(name: 'BTC/USD'),
-        trades: Exchange.find_by(code: 'mtgox'),
+        market: Market.find_by(name: 'BTC/USD'),
+        exchange: Exchange.find_by(code: 'mtgox'),
         code: 'usd'
     )
   end

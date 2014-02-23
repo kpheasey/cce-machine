@@ -2,7 +2,6 @@ ActiveAdmin.register Market do
   permit_params :id, :name, :permalink, :is_active, :is_default
 
   filter :name
-  filter :code
   filter :is_active
   filter :is_default
 
@@ -14,6 +13,8 @@ ActiveAdmin.register Market do
 
   index do
     column :name
+    column :source
+    column :target
     column :is_active
     column :is_default
     default_actions
@@ -22,6 +23,8 @@ ActiveAdmin.register Market do
   form do |f|
     f.inputs 'Market Details' do
       f.input :name
+      f.input :source
+      f.input :target
       f.input :permalink
       f.input :is_active
       f.input :is_default
