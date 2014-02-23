@@ -5,21 +5,21 @@ class Orders::CryptsyWorker
     exchange_market = ExchangeMarket.includes(:exchange, :market).find(exchange_market_id)
     new_orders = []
 
-    source_sell_orders.each do |source_ask|
+    source_sell_orders.each do |source_sell|
       new_orders << Order::Sell.create!(
           market: exchange_market.market,
           exchange: exchange_market.exchange,
-          price: source_ask['price'],
-          amount: source_ask['quantity']
+          price: source_sell['price'],
+          amount: source_sell['quantity']
       )
     end
 
-    source_buy_orders.each do |source_bid|
+    source_buy_orders.each do |source_buy|
       new_orders << Order::Buy.create!(
           market: exchange_market.market,
           exchange: exchange_market.exchange,
-          price: source_bid['price'],
-          amount: source_bid['quantity']
+          price: source_buy['price'],
+          amount: source_buy['quantity']
       )
     end
 

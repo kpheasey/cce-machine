@@ -16,7 +16,7 @@
             .col-md-6
               - current_value = current_market.current_value(exchange)
               - unless current_value.nil?
-                = current_value.round(4)
+                = current_value.round(6)
 
   // markets
   %h4 Markets
@@ -29,4 +29,4 @@
             .col-md-6
               - current_value = market.current_value(current_exchange)
               - unless current_value.nil?
-                = current_value.round(4)
+                = current_value.round(6)

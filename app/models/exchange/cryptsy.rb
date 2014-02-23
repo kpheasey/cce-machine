@@ -7,7 +7,7 @@ class Exchange::CRYPTSY < Exchange
     api.marketdata['return']['markets'].each do |market|
       exchange_market = self.exchange_markets.find_by(code: market[1]['marketid'])
       next if exchange_market.nil?
-
+      puts market[1]['buyorders'].inspect
       Trades::CryptsyWorker.perform_async(exchange_market.id, market[1]['recenttrades'])
       Orders::CryptsyWorker.perform_async(exchange_market.id, market[1]['sellorders'], market[1]['buyorders'])
     end
