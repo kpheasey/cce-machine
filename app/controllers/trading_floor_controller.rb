@@ -1,29 +1,19 @@
 class TradingFloorController < ApplicationController
+  layout 'trading_floor'
+  before_action :validate_exchange_market, only: :show
 
   def show
-    @current_exchange = Exchange.friendly.find(params[:exchange])
-    @current_market = current_exchange.markets.friendly.find(params[:market])
     @sell_orders = Order::Sell.where(exchange: current_exchange, market: current_market).limit(10)
     @buy_orders = Order::Buy.where(exchange: current_market, market: current_market).limit(10)
   end
 
-  def stream
-    @exchange = Exchange.friendly.find(params[:exchange])
+  private
 
-    response.headers['Content-Type'] = 'text/event-stream'
-    redis = Redis.new
+  def validate_exchange_market
+    @current_exchange = Exchange.friendly.find(params[:exchange])
+    @current_market = current_exchange.markets.friendly.find(params[:market])
 
-    redis.subscribe("exchange_#{@exchange.id}_trades.create") do |on|
-      on.message do |event, trade|
-        response.stream.write("event: #{event}\n")
-        response.stream.write("data: #{trade}\n\n")
-      end
-    end
-  rescue IOError
-    # stream closed
-  ensure
-    redis.quit
-    response.stream.close
+    raise ActiveRecord::RecordNotFound if current_market.nil?
   end
 
 end

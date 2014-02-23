@@ -1,25 +1,13 @@
-!!!
-%html
-  %head
-    %title= full_title(yield(:title)).html_safe
-    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' }
-    = stylesheet_link_tag 'application', media: 'all'
-    = javascript_include_tag 'application'
-    %script{ src: 'https://www.google.com/jsapi' }
-    = csrf_meta_tags
+- content_for :content do
+  .row
+    = render 'layouts/trading_floor_side_navigation'
 
-  %body{data: {page: [controller_name.capitalize, action_name.capitalize].join}}
-    = render 'layouts/header'
+    .col-xs-12.col-sm-10.col-sm-offset-2.main
 
-    #main.container-fluid
-      .row
-        = render 'layouts/trading_floor_side_navigation'
-        .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+      = render partial: 'shared/flash_messages'
 
-          = render partial: 'shared/flash_messages'
+      = content_for?(:trading_floor_content) ? yield(:trading_floor_content) : yield
 
-          = yield
+      = debug(params) if Rails.env.development?
 
-          = debug(params) if Rails.env.development?
-
-    = render 'layouts/footer'
+= render template: 'layouts/application'
