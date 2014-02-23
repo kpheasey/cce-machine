@@ -2,9 +2,9 @@
 
   // exchanges
   %h4 Exchanges
-  %ul.nav.nav-sidebar
+  %ul.nav.nav-sidebar.exchanges
     - Exchange.active.each do |exchange|
-      %li{ class: ('active' if current_exchange == exchange) }
+      %li{ class: ('active' if current_exchange == exchange), 'data-exchange' => exchange.id, 'data-market' => current_market.id }
         - if exchange.markets.include? current_market
           - trading_floor_link = trading_floor_path(exchange: exchange, market: current_market)
         - else
@@ -13,20 +13,20 @@
         = link_to trading_floor_link do
           .row
             .col-md-6= exchange.name
-            .col-md-6
+            .col-md-6.price
               - current_value = current_market.current_value(exchange)
               - unless current_value.nil?
                 = current_value.round(6)
 
   // markets
   %h4 Markets
-  %ul.nav.nav-sidebar
+  %ul.nav.nav-sidebar.markets
     - current_exchange.markets.each do |market|
-      %li{ class: ( 'active' if current_market == market) }
-        = link_to trading_floor_path(exchange: current_exchange, market: market), { class: 'list-group-item' } do
+      %li{ class: ( 'active' if current_market == market), 'data-exchange' => current_exchange.id, 'data-market' => market.id }
+        = link_to trading_floor_path(exchange: current_exchange, market: market) do
           .row
             .col-md-6= market.name
-            .col-md-6
+            .col-md-6.price
               - current_value = market.current_value(current_exchange)
               - unless current_value.nil?
                 = current_value.round(6)

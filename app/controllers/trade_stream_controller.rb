@@ -1,11 +1,11 @@
 class TradeStreamController < ApplicationController
+  include ActionController::Live
 
   def exchange
     @exchange = Exchange.friendly.find(params[:exchange])
 
     response.headers['Content-Type'] = 'text/event-stream'
     redis = Redis.new
-
     redis.subscribe("exchange_#{@exchange.id}_trades.create") do |on|
       on.message do |event, trade|
         response.stream.write("event: #{event}\n")
