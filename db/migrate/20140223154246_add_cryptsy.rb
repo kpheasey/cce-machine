@@ -2,7 +2,8 @@ class AddCryptsy < ActiveRecord::Migration
   def up
     Exchange::CRYPTSY.create!(
         name: 'Cryptsy',
-        code: 'cryptsy'
+        code: 'cryptsy',
+        permalink: 'cryptsy'
     )
 
     ExchangeMarket.create!(

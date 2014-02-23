@@ -13,6 +13,8 @@ class Exchange < ActiveRecord::Base
   has_many :trades, dependent: :destroy
   has_many :users, through: :exchange_accounts
 
+  belongs_to :default_exchange_market, class_name: 'ExchangeMarket', foreign_key: 'exchange_market_id'
+
   accepts_nested_attributes_for :fees, allow_destroy: true
 
   after_save :make_default
@@ -44,6 +46,20 @@ class Exchange < ActiveRecord::Base
     Exchange.all.each do |exchange|
       exchange.fetch_orders
     end
+  end
+
+  def default_market
+    if self.default_exchange_market.nil?
+      market = Market.default
+
+      unless self.markets.include? market
+        market = self.markets.first
+      end
+    else
+      market = self.default_exchange_market.market
+    end
+
+    return market
   end
 
   private

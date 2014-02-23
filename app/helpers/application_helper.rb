@@ -34,7 +34,7 @@ module ApplicationHelper
   end
 
   def current_market
-    @current_market ||= Market.default
+    @current_market ||= current_exchange.default_exchange_market.market
   end
 
 end

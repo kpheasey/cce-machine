@@ -1,5 +1,6 @@
 ActiveAdmin.register Exchange do
-  permit_params :id, :name, :permalink, :is_active, :is_default, fees_attributes: [:id, :min, :max, :fee, :discount, :_destroy]
+  permit_params :id, :name, :permalink, :is_active, :is_default, :exchange_market_id,
+                fees_attributes: [:id, :min, :max, :fee, :discount, :_destroy]
 
   filter :name
   filter :code
@@ -28,6 +29,7 @@ ActiveAdmin.register Exchange do
       f.input :permalink
       f.input :is_active
       f.input :is_default
+      f.input :default_exchange_market, collection: f.object.exchange_markets.map{ |em| [em.market.name, em.id] }
     end
     f.actions
   end

@@ -5,7 +5,12 @@
   %ul.nav.nav-sidebar
     - Exchange.active.each do |exchange|
       %li{ class: ('active' if current_exchange == exchange) }
-        = link_to trading_floor_path(exchange: exchange, market: current_market) do
+        - if exchange.markets.include? current_market
+          - trading_floor_link = trading_floor_path(exchange: exchange, market: current_market)
+        - else
+          - trading_floor_link = trading_floor_path(exchange: exchange, market: exchange.default_market)
+
+        = link_to trading_floor_link do
           .row
             .col-md-6= exchange.name
             .col-md-6
