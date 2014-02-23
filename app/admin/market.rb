@@ -1,5 +1,10 @@
 ActiveAdmin.register Market do
-  permit_params :id, :name, :permalink, fees_attributes: [:id, :min, :max, :fee, :discount, :_destroy]
+  permit_params :id, :name, :permalink, :is_active, :is_default
+
+  filter :name
+  filter :code
+  filter :is_active
+  filter :is_default
 
   controller do
     def find_resource
@@ -10,16 +15,18 @@ ActiveAdmin.register Market do
   index do
     column :name
     column :is_active
+    column :is_default
     default_actions
   end
 
-  form do |m|
-    m.inputs 'Market Details' do
-      m.input :name
-      m.input :permalink
-      m.input :is_active
+  form do |f|
+    f.inputs 'Market Details' do
+      f.input :name
+      f.input :permalink
+      f.input :is_active
+      f.input :is_default
     end
-    m.actions
+    f.actions
   end
 
 end

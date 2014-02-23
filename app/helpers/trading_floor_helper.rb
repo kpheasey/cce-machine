@@ -1,0 +1,2 @@
+module TradingFloorHelper
+end

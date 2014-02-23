@@ -11,17 +11,15 @@
   %body{data: {page: [controller_name.capitalize, action_name.capitalize].join}}
     = render 'layouts/header'
 
-    #main.container
-      .container-fluid
-        .row
-          = render 'layouts/exchange_market_side_navigation'
-          .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+    #main.container-fluid
+      .row
+        = render 'layouts/trading_floor_side_navigation'
+        .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
 
-            - flash.each do |key, value|
-              .alert{ class: "alert-#{key}" }= value
+          = render partial: 'shared/flash_messages'
 
-            = yield
+          = yield
 
-            = debug(params) if Rails.env.development?
+          = debug(params) if Rails.env.development?
 
     = render 'layouts/footer'

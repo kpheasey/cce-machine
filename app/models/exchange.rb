@@ -8,14 +8,18 @@ class Exchange < ActiveRecord::Base
   has_many :fees
   has_many :markets, through: :exchange_markets
   has_many :orders
-  has_many :order_asks, class_name: 'Sell'
-  has_many :order_bids, class_name: 'Buy'
+  has_many :order_sells, class_name: 'Order::Sell'
+  has_many :order_buys, class_name: 'Order::Buy'
   has_many :trades
   has_many :users, through: :exchange_accounts
 
   accepts_nested_attributes_for :fees, allow_destroy: true
 
+  after_save :make_default
+
+  default_scope -> { order(:name) }
   scope :active, -> { where(is_active: true) }
+  scope :default, -> { find_by(is_default: true) }
 
   @@exchanges = { btce: 'btce', mtgox: 'mtgox', cryptsy: 'cryptsy' }
 
@@ -39,6 +43,14 @@ class Exchange < ActiveRecord::Base
   def self.fetch_orders
     Exchange.all.each do |exchange|
       exchange.fetch_orders
+    end
+  end
+
+  private
+
+  def make_default
+    if self.is_default
+      Market.where('id != ?', self.id).update_all(is_default: false)
     end
   end
 

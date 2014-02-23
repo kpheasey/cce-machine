@@ -1,0 +1,22 @@
+.col-sm-3.col-md-2.sidebar
+
+  // exchanges
+  %h4 Exchanges
+  %ul.nav.nav-sidebar
+    - Exchange.active.each do |exchange|
+      - if current_exchange == exchange
+        %li{ class: ('active' if current_exchange == exchange) }
+          = link_to trading_floor_path(exchange: exchange, market: current_market) do
+            .row
+              .col-md-6= exchange.name
+              .col-md-6= current_market.current_value(exchange).round(4)
+
+  // markets
+  %h4 Markets
+  %ul.nav.nav-sidebar
+    - current_exchange.markets.each do |market|
+      %li{ class: ( 'active' if current_market == market) }
+        = link_to trading_floor_path(exchange: current_exchange, market: market), { class: 'list-group-item' } do
+          .row
+            .col-md-6= market.name
+            .col-md-6= market.current_value.round(4)

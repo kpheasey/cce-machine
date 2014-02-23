@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140221140027) do
+ActiveRecord::Schema.define(version: 20140223140037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,7 +86,8 @@ ActiveRecord::Schema.define(version: 20140221140027) do
     t.string  "code"
     t.string  "permalink"
     t.string  "slug"
-    t.boolean "is_active", default: true
+    t.boolean "is_active",  default: true
+    t.boolean "is_default", default: false
   end
 
   add_index "exchanges", ["permalink"], name: "index_exchanges_on_permalink", unique: true, using: :btree

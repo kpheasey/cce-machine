@@ -30,7 +30,7 @@ module ApplicationHelper
   end
 
   def current_exchange
-    @current_exchange ||= nil
+    @current_exchange ||= Exchange.default
   end
 
   def current_market

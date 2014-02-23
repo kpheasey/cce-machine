@@ -4,8 +4,12 @@
 
 :javascript
   jQuery(function() {
-    window.$M = new (App.#{params[:controller].capitalize} || App.Base)(#{@bootstrap_data});
-    if (typeof $M.#{params[:action]} === 'function') {
-      return $M.#{params[:action]}.call();
+    window.$App = new (App.#{controller_name.split('_').map(&:capitalize).join('')} || App.Base)(#{@bootstrap_data});
+
+    $App.currentExchange = JSON.parse('#{current_exchange.to_json}')
+    $App.currentMarket = JSON.parse('#{current_market.to_json}')
+
+    if (typeof $App.#{action_name} === 'function') {
+      return $App.#{action_name}.call();
     }
   });

@@ -7,19 +7,15 @@ class Market < ActiveRecord::Base
 
   has_many :exchange_markets
   has_many :exchanges, through: :exchange_markets
+  has_many :trades
 
   has_and_belongs_to_many :currencies
 
   after_save :make_default
 
+  default_scope -> { order(:name) }
   scope :active, -> { where(is_active: true) }
   scope :default, -> { find_by(is_default: true) }
-
-  def make_default
-    if self.is_default
-      Market.where('id != ?', self.id).update_all(is_default: false)
-    end
-  end
 
   def current_value(exchange = nil)
     if exchange.nil?
@@ -29,6 +25,14 @@ class Market < ActiveRecord::Base
     end
 
     return trade.order('date DESC').limit(1).first.price
+  end
+
+  private
+
+  def make_default
+    if self.is_default
+      Market.where('id != ?', self.id).update_all(is_default: false)
+    end
   end
 
 end

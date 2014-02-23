@@ -1,7 +1,9 @@
 CryptoCurrencyExchangeMachine::Application.routes.draw do
 
   # root
-  root 'markets#show', id: (Market.method_defined?(:is_default) ? Market.default : 1)
+  root 'trading_floor#show',
+       exchange: (Exchange.method_defined?(:is_default) ? Exchange.default : 1),
+       market: (Market.method_defined?(:is_default) ? Market.default : 1)
 
   # Active Admin
   devise_for :admin_users, ActiveAdmin::Devise.config
@@ -15,12 +17,15 @@ CryptoCurrencyExchangeMachine::Application.routes.draw do
   get '/charts/candlestick'
 
   # resources
-  get '/exchanges/:id/:market', to: 'exchanges#show', as: 'exchange'
-  resources :markets, only: [:index, :show]
-  get '/trades/stream', to: 'trades#stream'
+  get '/trading-floor/:exchange/:market', to: 'trading_floor#show', as: 'trading_floor'
 
   namespace :user do
     resources :exchanges
   end
+
+  # streams
+  get '/trade-stream/exchange/:exchange', to: 'trade_stream#exchange'
+  get '/trade-stream/market/:market', to: 'trade_stream#market'
+  get '/trade-stream/exchange-market/:exchange/:market', to: 'trade_stream#exchange_market'
 
 end
