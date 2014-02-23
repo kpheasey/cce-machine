@@ -1,5 +1,5 @@
 ActiveAdmin.register Market do
-  permit_params :id, :name, :permalink, :is_active, :is_default
+  permit_params :id, :name, :permalink, :is_active, :is_default, :source_id, :target_id
 
   filter :name
   filter :is_active

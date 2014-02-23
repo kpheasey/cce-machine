@@ -16,6 +16,7 @@ class Exchange < ActiveRecord::Base
   belongs_to :default_exchange_market, class_name: 'ExchangeMarket', foreign_key: 'exchange_market_id'
 
   accepts_nested_attributes_for :fees, allow_destroy: true
+  accepts_nested_attributes_for :exchange_markets, allow_destroy: true
 
   after_save :make_default
 
