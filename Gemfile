@@ -21,7 +21,7 @@ gem 'bootstrap3-datetimepicker-rails', '~> 2.1.30'
 # BTC Market APIs
 gem 'btce', '~> 0.5.0'
 gem 'mtgox', '~> 1.1.0'
-gem 'cryptsy-api', github: 'kpheasey/cryptsy-api'
+gem 'cryptsy-api', '~> 0.1.2'
 
 # General gems
 gem 'activeadmin', github: 'gregbell/active_admin'

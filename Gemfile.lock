@@ -16,14 +16,6 @@ GIT
       ransack (~> 1.0)
       sass-rails
 
-GIT
-  remote: git://github.com/kpheasey/cryptsy-api.git
-  revision: 492d21ce18f7006ddfb087c5b931e3c3bbcdf867
-  specs:
-    cryptsy-api (0.1.1)
-      httparty
-      json
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -97,6 +89,9 @@ GEM
     coffee-script-source (1.7.0)
     columnize (0.3.6)
     connection_pool (1.2.0)
+    cryptsy-api (0.1.2)
+      httparty
+      json
     debug_inspector (0.0.2)
     debugger (1.6.5)
       columnize (>= 0.3.1)
@@ -260,7 +255,7 @@ DEPENDENCIES
   capistrano-bundler (~> 1.1.2)
   capistrano-rails (~> 1.1)
   capistrano-rvm
-  cryptsy-api!
+  cryptsy-api (~> 0.1.2)
   debugger
   devise (~> 3.2.2)
   friendly_id (~> 5.0.0)
