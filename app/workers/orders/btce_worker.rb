@@ -1,9 +1,8 @@
 class Orders::BtceWorker
   include Sidekiq::Worker
 
-  def perform(exchange_market_id)
+  def perform(exchange_market_id, source_orders)
     exchange_market = ExchangeMarket.includes(:exchange, :market).find(exchange_market_id)
-    source_orders = Btce::Depth.new(exchange_market.code).json[exchange_market.code]
     new_orders = []
 
     source_orders['asks'].each do |source_ask|
@@ -26,5 +25,7 @@ class Orders::BtceWorker
 
     Order.where(exchange: exchange_market.exchange, market: exchange_market.market).
         where('id NOT IN (?)', new_orders.map{ |o| o.id }).destroy_all
+
+
   end
 end

@@ -17,7 +17,7 @@ class Trade < ActiveRecord::Base
     ActiveRecord::Base.connection.execute 'UNLISTEN trades_new'
   end
 
-  def notify_trade_create
+  def notify_latest
     ActiveRecord::Base.connection.execute "NOTIFY trades_new, #{ActiveRecord::Base.connection.quote self.to_json}"
   end
 

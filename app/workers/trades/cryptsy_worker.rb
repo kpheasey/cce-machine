@@ -24,7 +24,7 @@ class Trades::CryptsyWorker
       last_trade = trade
     end
 
-    last_trade.notify_trade_create unless last_trade.nil?
+    last_trade.notify_latest unless last_trade.nil?
   end
 
 end

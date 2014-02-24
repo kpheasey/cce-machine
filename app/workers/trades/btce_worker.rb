@@ -1,11 +1,12 @@
 class Trades::BtceWorker
   include Sidekiq::Worker
 
-  def perform(exchange_market_id)
+  def perform(exchange_market_id, source_trades)
     exchange_market = ExchangeMarket.includes(:exchange, :market).find(exchange_market_id)
     max_known_id = exchange_market.max_id
+    last_trade = nil
 
-    Btce::Trades.new(exchange_market.code, { limit: 2000 }).json[exchange_market.code].each do |source|
+    source_trades.each do |source|
       next if source['tid'] <= max_known_id
 
       trade = Trade.find_or_initialize_by(
@@ -18,6 +19,10 @@ class Trades::BtceWorker
       trade.amount = source['amount']
       trade.date = DateTime.strptime(source['timestamp'].to_s,'%s')
       trade.save
+
+      last_trade = trade
     end
+
+    last_trade.notify_latest unless last_trade.nil?
   end
 end

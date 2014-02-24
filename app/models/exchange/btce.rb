@@ -8,15 +8,21 @@ class Exchange::BTCE < Exchange
 
   # fetch past trades
   def fetch_trades
-    self.exchange_markets.each do |exchange_market|
-      Trades::BtceWorker.perform_async(exchange_market.id)
+    exchange_market_codes = self.exchange_markets.pluck(:code).join('-')
+
+    Btce::Trades.new(exchange_market_codes, { limit: 2000 }).json.each do |market_code, trades|
+      exchange_market = self.exchange_markets.find_by(code: market_code)
+      Trades::BtceWorker.perform_async(exchange_market.id, trades)
     end
   end
 
   # fetch open orders
   def fetch_orders
-    self.exchange_markets.each do |exchange_market|
-      Orders::BtceWorker.perform_async(exchange_market.id)
+    exchange_market_codes = self.exchange_markets.pluck(:code).join('-')
+
+    Btce::Depth.new(exchange_market_codes).json.each do |market_code, orders|
+      exchange_market = self.exchange_markets.find_by(code: market_code)
+      Orders::BtceWorker.perform_async(exchange_market.id, orders)
     end
   end
 
