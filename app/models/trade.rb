@@ -6,8 +6,6 @@ class Trade < ActiveRecord::Base
 
   default_scope -> { order('created_at DESC') }
 
-  after_create :notify_trade_create
-
   def self.on_create
     connection.execute 'LISTEN trades_new'
     loop do
@@ -22,8 +20,5 @@ class Trade < ActiveRecord::Base
   def notify_trade_create
     ActiveRecord::Base.connection.execute "NOTIFY trades_new, #{ActiveRecord::Base.connection.quote self.to_json}"
   end
-
-  private
-
 
 end
