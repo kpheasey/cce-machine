@@ -27,7 +27,7 @@ class AddDefaults < ActiveRecord::Migration
 
     # add default ExchangeMarkets
     ExchangeMarket.create!(
-        markets: Market.find_by(name: 'BTC/USD'),
+        market: Market.find_by(name: 'BTC/USD'),
         exchange: Exchange.find_by(code: 'btce'),
         code: 'btc_usd'
     )

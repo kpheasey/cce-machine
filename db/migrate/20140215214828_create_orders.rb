@@ -1,12 +1,12 @@
 class CreateOrders < ActiveRecord::Migration
   def up
     create_table :orders do |t|
-      t.string :type
-      t.references :markets
-      t.references :trades
-      t.decimal :price
-      t.decimal :amount
-      t.integer :set
+      t.string    :type
+      t.integer   :market_id
+      t.integer   :exchange_id
+      t.decimal   :price
+      t.decimal   :amount
+      t.integer   :set
 
       t.timestamps
     end
