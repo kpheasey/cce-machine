@@ -1,4 +1,6 @@
 # Exchange ticker
-every 30.seconds, roles: [:app] do
+every 1.minutes, roles: [:app] do
+  runner 'Exchange.tick'
+  sleep 30
   runner 'Exchange.tick'
 end
