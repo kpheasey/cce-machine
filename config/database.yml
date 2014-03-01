@@ -1,6 +1,6 @@
 development:
   adapter: postgresql
-  encoding: unicode
+  encoding: utf8
   database: ccem_development
   pool: 5
   username: Kevin
@@ -8,7 +8,7 @@ development:
 
 test:
   adapter: postgresql
-  encoding: unicode
+  encoding: utf8
   database: ccem_test
   pool: 5
   username: Kevin
@@ -16,8 +16,11 @@ test:
 
 production:
   adapter: postgresql
-  encoding: unicode
-  database: ccem_production
-  pool: 5
-  username: btcdeploy
-  password: ovoOGvL7n3dRyU9ZzTey
+  encoding: utf8
+  database: rails_ccemachine
+  username: rails_ccemachine_user
+  password: 3D.X6JkNr)$mb]R
+  host: 107.170.63.250
+  port: 5432
+  pool: 10
+
