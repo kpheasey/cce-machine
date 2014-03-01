@@ -1,16 +1,10 @@
 class AddDefaults < ActiveRecord::Migration
   def up
-    # add default Exchanges
+    # add default Exchange
     Exchange.create!(
         type: 'Exchange::BTCE',
         name: 'BTC-E',
         code: 'btce'
-    )
-
-    Exchange.create!(
-        type: 'Exchange::MTGOX',
-        name: 'MT.Gox',
-        code: 'mtgox'
     )
 
     # add default Currencies
@@ -37,19 +31,11 @@ class AddDefaults < ActiveRecord::Migration
         exchange: Exchange.find_by(code: 'btce'),
         code: 'btc_usd'
     )
-
-    ExchangeMarket.create!(
-        markets: Market.find_by(name: 'BTC/USD'),
-        exchange: Exchange.find_by(code: 'mtgox'),
-        code: 'usd'
-    )
-
   end
 
   def down
     # remove default Exchanges
     Exchange.find_by(type: 'Exchange::BTCE').destroy
-    Exchange.find_by(type: 'Exchange::MTGOX').destroy
 
     # remove default Currencies
     Currency.find_by(code: 'usd').destroy
@@ -62,12 +48,6 @@ class AddDefaults < ActiveRecord::Migration
     ExchangeMarket.find_by(
         markets: Market.find_by(name: 'BTC/USD'),
         exchange: Exchange.find_by(code: 'btce')
-    ).destroy
-
-    ExchangeMarket.find_by(
-        markets: Market.find_by(name: 'BTC/USD'),
-        exchange: Exchange.find_by(code: 'mtgox'),
-        code: 'usd'
     ).destroy
   end
 end

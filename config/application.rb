@@ -9,6 +9,6 @@ Bundler.require(:default, Rails.env)
 
 module CryptoCurrencyExchangeMachine
   class Application < Rails::Application
-
+    config.i18n.enforce_available_locales = true
   end
 end

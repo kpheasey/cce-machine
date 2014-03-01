@@ -109,8 +109,6 @@ GEM
       warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.0.2)
-    faraday (0.9.0)
-      multipart-post (>= 1.2, < 3)
     formtastic (2.3.0.rc2)
       actionpack (>= 3.0)
     friendly_id (5.0.3)
@@ -148,12 +146,8 @@ GEM
       railties (>= 3.1)
     monkey-patch (0.0.16)
       activesupport
-    mtgox (1.1.0)
-      faraday (~> 0.8, < 0.10)
-      json (~> 1.7, >= 1.7.7)
     multi_json (1.8.4)
     multi_xml (0.5.5)
-    multipart-post (2.0.0)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (2.8.0)
@@ -272,7 +266,6 @@ DEPENDENCIES
   jquery-rails (~> 3.1.0)
   jquery-ui-rails (~> 4.2.0)
   momentjs-rails (~> 2.5.0)
-  mtgox (~> 1.1.0)
   pg
   pjax_rails (~> 0.4.0)
   puma
