@@ -6,9 +6,9 @@ set :branch, 'master'
 # Supports bulk-adding hosts to roles, the primary
 # server in each group is considered to be the first
 # unless any hosts have the primary property set.
-role :app, %w{btcdeploy@162.243.237.227}
-role :web, %w{btcdeploy@162.243.237.227}
-role :db,  %w{btcdeploy@162.243.237.227}
+role :app, %w{deploy@107.170.63.239:10420}
+role :web, %w{deploy@107.170.63.239:10420}
+role :db,  %w{deploy@107.170.63.239:10420}
 
 # Extended Server Syntax
 # ======================
@@ -16,7 +16,7 @@ role :db,  %w{btcdeploy@162.243.237.227}
 # definition into the server list. The second argument
 # something that quacks like a hash can be used to set
 # extended properties on the server.
-server '162.243.237.227', user: 'btcdeploy', roles: %w{web app}
+server '107.170.63.239:10420', user: 'deploy', roles: %w{web app db}
 
 # you can set custom ssh options
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options

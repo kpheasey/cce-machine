@@ -1,7 +1,7 @@
-set :application, 'btc'
-set :repo_url, 'git@github.com:kpheasey/btc.git'
+set :application, 'cce-machine'
+set :repo_url, 'git@github.com:kpheasey/cce-machine.git'
 
-set :deploy_to, '/var/www/apps/www.btc'
+set :deploy_to, '/var/www/ccemachine.com'
 set :scm, :git
 
 set :format, :pretty
