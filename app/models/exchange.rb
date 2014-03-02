@@ -67,8 +67,12 @@ class Exchange < ActiveRecord::Base
 
   def make_default
     if self.is_default
-      Market.where('id != ?', self.id).update_all(is_default: false)
+      Exchange.where('id != ?', self.id).update_all(is_default: false)
     end
+  end
+
+  def should_generate_new_friendly_id?
+    self.permalink_changed?
   end
 
 end

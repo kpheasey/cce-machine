@@ -37,4 +37,8 @@ class Market < ActiveRecord::Base
     end
   end
 
+  def should_generate_new_friendly_id?
+    permalink_changed?
+  end
+
 end
