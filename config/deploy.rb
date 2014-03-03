@@ -35,4 +35,11 @@ namespace :deploy do
 
 end
 
+# restart Passenger
 after 'deploy:publishing', 'deploy:restart'
+
+# handle stream daemons
+after 'deploy:stop',    'daemons:stop'
+after 'deploy:start',   'daemons:start'
+after 'deploy:restart', 'daemons:restart'
+

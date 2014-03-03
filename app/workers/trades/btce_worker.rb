@@ -24,5 +24,6 @@ class Trades::BtceWorker
     end
 
     last_trade.notify_latest unless last_trade.nil?
+    Rails.logger.info 'last trade: ' + last_trade.inspect
   end
 end

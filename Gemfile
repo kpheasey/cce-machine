@@ -25,6 +25,7 @@ gem 'cryptsy-api', '~> 0.1.2'
 
 # General gems
 gem 'activeadmin', github: 'gregbell/active_admin'
+gem 'daemons-rails', '~> 1.2.1'
 gem 'devise', '~> 3.2.2'
 gem 'friendly_id', '~> 5.0.0'
 gem 'pjax_rails', '~> 0.4.0'

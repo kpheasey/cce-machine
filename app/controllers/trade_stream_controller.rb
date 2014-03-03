@@ -8,6 +8,7 @@ class TradeStreamController < ApplicationController
     redis = Redis.new
     redis.subscribe("exchange_#{@exchange.id}_trades.create") do |on|
       on.message do |event, trade|
+        Rails.logger.info trade
         response.stream.write("event: #{event}\n")
         response.stream.write("data: #{trade}\n\n")
       end
