@@ -38,7 +38,25 @@ end
 # restart Passenger
 after 'deploy:publishing', 'deploy:restart'
 
+# Rake tasks
+
+
 # handle stream daemons
+namespace :daemons do
+
+  desc 'Stop Rails daemons'
+  task :stop do
+    run("cd #{deploy_to}/current; /usr/bin/env rake daemons:stop RAILS_ENV=#{rails_env}")
+  end
+
+  task :start do
+    run("cd #{deploy_to}/current; /usr/bin/env rake daemons:start RAILS_ENV=#{rails_env}")
+  end
+
+  task :restart do
+    run("cd #{deploy_to}/current; /usr/bin/env rake daemons:restart RAILS_ENV=#{rails_env}")
+  end
+end
 after 'deploy:stop',    'daemons:stop'
 after 'deploy:start',   'daemons:start'
 after 'deploy:restart', 'daemons:restart'
