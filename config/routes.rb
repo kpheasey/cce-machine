@@ -2,8 +2,8 @@ CryptoCurrencyExchangeMachine::Application.routes.draw do
 
   # root
   root 'trading_floor#show',
-       exchange: (Exchange.method_defined?(:is_default) ? Exchange.default : 1),
-       market: (Market.method_defined?(:is_default) ? Market.default : 1)
+       exchange: (Exchange.column_names.include?('is_default') ? Exchange.default : 1),
+       market: (Market.column_names.include?('is_default') ? Market.default : 1)
 
   # Active Admin
   devise_for :admin_users, ActiveAdmin::Devise.config

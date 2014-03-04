@@ -2,7 +2,7 @@ development:
   adapter: postgresql
   encoding: utf8
   database: ccem_development
-  pool: 5
+  pool: 100
   username: Kevin
   password: 247Kevin!88!
 
@@ -10,7 +10,7 @@ test:
   adapter: postgresql
   encoding: utf8
   database: ccem_test
-  pool: 5
+  pool: 100
   username: Kevin
   password: ''
 

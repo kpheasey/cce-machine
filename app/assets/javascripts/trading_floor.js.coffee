@@ -7,8 +7,8 @@ class App.TradingFloor extends App.Base
     this
 
   show: () ->
-    source = new EventSource('/trade-stream/exchange/' + $App.currentExchange.id)
-    source.addEventListener 'exchange_' + $App.currentExchange.id + '_trades.create', (e) ->
+    $App.tradeStream = new EventSource('/trade-stream/exchange/' + $App.currentExchange.id)
+    $App.tradeStream.addEventListener 'exchange_' + $App.currentExchange.id + '_trades.create', (e) ->
       trade = $.parseJSON(e.data)
       console.log trade
 
@@ -30,3 +30,8 @@ class App.TradingFloor extends App.Base
           $this.delay(3000).show(->
             $price.text(new_price)
           ).effect("highlight", { color: color }, 3000);
+
+    $(document).off('page:before-change').on 'page:before-change', (e) ->
+      if $App.tradeStream
+        $App.tradeStream.close()
+        $App.tradeStream = undefined

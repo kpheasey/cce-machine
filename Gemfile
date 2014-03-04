@@ -28,11 +28,11 @@ gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'daemons-rails', '~> 1.2.1'
 gem 'devise', '~> 3.2.2'
 gem 'friendly_id', '~> 5.0.0'
-gem 'pjax_rails', '~> 0.4.0'
 gem 'puma'
 gem 'redis', '~> 3.0.7'
 gem 'sidekiq', '~> 2.17.4'
 gem 'sinatra', require: false
+gem 'turbolinks'
 gem 'whenever', require: false
 
 # deployments
