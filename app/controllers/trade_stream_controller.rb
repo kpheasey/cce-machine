@@ -6,16 +6,22 @@ class TradeStreamController < ApplicationController
 
     response.headers['Content-Type'] = 'text/event-stream'
     redis = Redis.new
-    redis.subscribe("exchange_#{@exchange.id}_trades.create") do |on|
+
+    redis.subscribe(["exchange_#{@exchange.id}_trades.create", 'heartbeat']) do |on|
       on.message do |event, trade|
-        Rails.logger.info trade
-        response.stream.write("event: #{event}\n")
-        response.stream.write("data: #{trade}\n\n")
+        if event == "exchange_#{@exchange.id}_trades.create"
+          response.stream.write("event: #{event}\n")
+          response.stream.write("data: #{trade}\n\n")
+        elsif event == 'heartbeat'
+          response.stream.write("event: heartbeat\n")
+          response.stream.write("data: heartbeat\n\n")
+        end
       end
     end
   rescue IOError
     # stream closed
   ensure
+    # stopping stream thread
     redis.quit
     response.stream.close
   end
@@ -26,15 +32,21 @@ class TradeStreamController < ApplicationController
     response.headers['Content-Type'] = 'text/event-stream'
     redis = Redis.new
 
-    redis.subscribe("market_#{@market.id}_trades.create") do |on|
+    redis.subscribe(["market_#{@market.id}_trades.create", 'heartbeat']) do |on|
       on.message do |event, trade|
-        response.stream.write("event: #{event}\n")
-        response.stream.write("data: #{trade}\n\n")
+        if event == "market_#{@market.id}_trades.create"
+          response.stream.write("event: #{event}\n")
+          response.stream.write("data: #{trade}\n\n")
+        elsif event == 'heartbeat'
+          response.stream.write("event: heartbeat\n")
+          response.stream.write("data: heartbeat\n\n")
+        end
       end
     end
   rescue IOError
     # stream closed
   ensure
+      # stopping stream thread
     redis.quit
     response.stream.close
   end
@@ -46,15 +58,21 @@ class TradeStreamController < ApplicationController
     response.headers['Content-Type'] = 'text/event-stream'
     redis = Redis.new
 
-    redis.subscribe("exchange_#{@exchange.id}_market_#{@market.id}_trades.create") do |on|
+    redis.subscribe(["exchange_#{@exchange.id}_market_#{@market.id}_trades.create", 'heartbeat']) do |on|
       on.message do |event, trade|
-        response.stream.write("event: #{event}\n")
-        response.stream.write("data: #{trade}\n\n")
+        if event == "exchange_#{@exchange.id}_market_#{@market.id}_trades.create"
+          response.stream.write("event: #{event}\n")
+          response.stream.write("data: #{trade}\n\n")
+        elsif event == 'heartbeat'
+          response.stream.write("event: heartbeat\n")
+          response.stream.write("data: heartbeat\n\n")
+        end
       end
     end
   rescue IOError
     # stream closed
   ensure
+      # stopping stream thread
     redis.quit
     response.stream.close
   end

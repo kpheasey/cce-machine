@@ -4,6 +4,12 @@ class App.TradingFloor extends App.Base
   # Rails server code can pass in some bootstrap data if necessary, which we will save off for use anywhere on the client
   constructor: (bootstrap_data={}) ->
     super
+
+    $(document).on 'page:before-change', (e) ->
+      if typeof $App.tradeStream != 'undefined'
+        $App.tradeStream.close()
+        $App.tradeStream = undefined
+
     this
 
   show: () ->
@@ -31,7 +37,8 @@ class App.TradingFloor extends App.Base
             $price.text(new_price)
           ).effect("highlight", { color: color }, 3000);
 
-    $(document).off('page:before-change').on 'page:before-change', (e) ->
-      if $App.tradeStream
-        $App.tradeStream.close()
-        $App.tradeStream = undefined
+        $(document).on 'page:before-change', (e) ->
+
+
+
+
