@@ -22,5 +22,4 @@ production:
   password: 3D.X6JkNr)$mb]R
   host: 107.170.63.250
   port: 5432
-  pool: 10
-
+  pool: 100

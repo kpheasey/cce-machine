@@ -18,46 +18,21 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
+      # restart Passenger
       execute :touch, release_path.join('tmp/restart.txt')
-    end
-  end
 
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      #within release_path do
-      #   execute :rake, 'cache:clear'
-      #end
+      # restart daemons
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, 'daemons:stop'
+          execute :rake, 'daemons:start'
+        end
+      end
     end
   end
 
   after :finishing, 'deploy:cleanup'
-
 end
 
-# restart Passenger
+# restart actions
 after 'deploy:publishing', 'deploy:restart'
-
-# Rake tasks
-
-
-# handle stream daemons
-namespace :daemons do
-
-  desc 'Stop Rails daemons'
-  task :stop do
-    run("cd #{deploy_to}/current; /usr/bin/env rake daemons:stop RAILS_ENV=#{rails_env}")
-  end
-
-  task :start do
-    run("cd #{deploy_to}/current; /usr/bin/env rake daemons:start RAILS_ENV=#{rails_env}")
-  end
-
-  task :restart do
-    run("cd #{deploy_to}/current; /usr/bin/env rake daemons:restart RAILS_ENV=#{rails_env}")
-  end
-end
-after 'deploy:stop',    'daemons:stop'
-after 'deploy:start',   'daemons:start'
-after 'deploy:restart', 'daemons:restart'
-
