@@ -15,7 +15,5 @@
 //= require jquery_ujs
 //= require jquery.ui.effect-highlight
 //= require bootstrap
-//= require moment
-//= require bootstrap-datetimepicker
-//= require highcharts
+//= require highstock
 //= require_tree .

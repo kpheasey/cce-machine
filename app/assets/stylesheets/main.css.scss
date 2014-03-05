@@ -5,9 +5,21 @@
  * Base structure
  */
 
-/* Move down content because we have a fixed navbar that is 50px tall */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
-  padding-top: 50px;
+  padding: 60px 15px;
+}
+
+
+/*
+ * Tables
+ */
+thead th {
+  background-color: initial !important;
 }
 
 
@@ -18,6 +30,10 @@ body {
 .sub-header {
   padding-bottom: 10px;
   border-bottom: 1px solid #eee;
+}
+
+.navbar a{
+  text-decoration: none;
 }
 
 
@@ -34,7 +50,7 @@ body {
   .sidebar {
     position: fixed;
     top: 51px;
-    bottom: 0;
+    bottom: 51px;
     left: 0;
     z-index: 1000;
     display: block;
@@ -81,7 +97,6 @@ body {
 .main .page-header {
   margin-top: 0;
 }
-
 
 /*
  * Error Messages

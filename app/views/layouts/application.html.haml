@@ -7,7 +7,7 @@
     = javascript_include_tag 'application'
     = csrf_meta_tags
 
-  %body{data: {page: [controller_name.capitalize, action_name.capitalize].join}}
+  %body
     = render 'layouts/header'
 
     #main.container-fluid

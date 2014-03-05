@@ -1,16 +1,11 @@
-.panel.panel-default
-  .panel-heading
-    %h3.panel-title= title
-
-  %table.table.table-hover.orders-table
-    %thead
+%table.table.table-hover.orders-table
+  %thead
+    %th Price
+    %th= market.source.name
+    %th= market.target.name
+  %tbody
+    - orders.each do |order|
       %tr
-        %th Price
-        %th= market.source.name
-        %th= market.target.name
-    %tbody
-      - orders.each do |order|
-        %tr
-          %td= order.price
-          %td= order.amount
-          %td= order.price * order.amount
+        %td= order.price
+        %td= order.amount
+        %td= order.price * order.amount

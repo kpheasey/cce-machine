@@ -1,12 +1,9 @@
-%nav.navbar.navbar-default{ role: 'navigation' }
-  .container
-    %p.navbar-text.navbar-right= "&copy; #{Time.new.year} Kevin Pheasey".html_safe
-
+.navbar.navbar-inverse.navbar-fixed-bottom{ role: 'navigation' }
+  .navbar-right
+    %p.navbar-text &copy; 2014 Kevin Pheasey
 :javascript
   jQuery(function() {
-    if (typeof $App === 'undefined') {
-        window.$App = new (App.#{controller_name.split('_').map(&:capitalize).join('')} || App.Base)(#{@bootstrap_data});
-    }
+    window.$App = new (App.#{controller_name.split('_').map(&:capitalize).join('')} || App.Base)(#{@bootstrap_data});
 
     $App.currentExchange = JSON.parse('#{current_exchange.to_json}')
     $App.currentMarket = JSON.parse('#{current_market.to_json}')
