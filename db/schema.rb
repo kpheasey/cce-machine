@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140305163938) do
+ActiveRecord::Schema.define(version: 20140305165742) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,12 +129,13 @@ ActiveRecord::Schema.define(version: 20140305163938) do
     t.integer  "target_id"
     t.string   "permalink"
     t.string   "slug"
-    t.boolean  "is_default", default: true
+    t.boolean  "is_default", default: false
     t.boolean  "is_active",  default: true
   end
 
   add_index "markets", ["permalink"], name: "index_markets_on_permalink", unique: true, using: :btree
   add_index "markets", ["slug"], name: "index_markets_on_slug", unique: true, using: :btree
+  add_index "markets", ["source_id", "target_id"], name: "index_markets_on_source_id_and_target_id", unique: true, using: :btree
 
   create_table "orders", force: true do |t|
     t.string   "type"

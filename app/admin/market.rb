@@ -23,8 +23,8 @@ ActiveAdmin.register Market do
   form do |f|
     f.inputs 'Market Details' do
       f.input :name
-      f.input :source
-      f.input :target
+      f.input :source, collection: Currency.all.order(:code).map{ |c| [c.code, c.id] }
+      f.input :target, collection: Currency.all.order(:code).map{ |c| [c.code, c.id] }
       f.input :permalink
       f.input :is_active
       f.input :is_default
