@@ -3,7 +3,6 @@ class ExchangeMarket < ActiveRecord::Base
   belongs_to :exchange
 
   has_many :fees
-
   accepts_nested_attributes_for :fees
 
   def current_value
