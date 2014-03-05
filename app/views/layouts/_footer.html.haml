@@ -3,12 +3,12 @@
     %p.navbar-text &copy; 2014 Kevin Pheasey
 :javascript
   jQuery(function() {
-    window.$App = new (App.#{controller_name.split('_').map(&:capitalize).join('')} || App.Base)(#{@bootstrap_data});
+    window.$this = new (App.#{controller_name.split('_').map(&:capitalize).join('')} || App.Base)(#{@bootstrap_data});
 
-    $App.currentExchange = JSON.parse('#{current_exchange.to_json}')
-    $App.currentMarket = JSON.parse('#{current_market.to_json}')
+    $this.currentExchange = JSON.parse('#{current_exchange.to_json}')
+    $this.currentMarket = JSON.parse('#{current_market.to_json}')
 
-    if (typeof $App.#{action_name} === 'function') {
-      return $App.#{action_name}.call();
+    if (typeof $this.#{action_name} === 'function') {
+      return $this.#{action_name}.call();
     }
   });
