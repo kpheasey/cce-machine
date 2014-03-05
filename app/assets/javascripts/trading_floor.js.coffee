@@ -15,6 +15,7 @@ class App.TradingFloor extends App.Base
   show: () ->
     $this.tradeStream = new EventSource('/trade-stream/exchange/' + $this.currentExchange.id)
     $this.tradeStream.addEventListener 'exchange_' + $this.currentExchange.id + '_trades.create', $this.update_market_value
+    $this.initializeChart()
 
 
   update_market_value: (event) ->
@@ -32,3 +33,36 @@ class App.TradingFloor extends App.Base
 
       $price.text(new_price)
       $this.effect("highlight", { color: color }, 3000)
+
+  initializeChart: ->
+    # TODO: implement asynchronous candle stick chart loading.
+    # http://jsfiddle.net/gh/get/jquery/1.9.1/highslide-software/highcharts.com/tree/master/samples/stock/demo/lazy-loading/
+    $.getJSON "http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-ohlc.json&callback=?", (data) ->
+
+      # create the chart
+      $("#chart").highcharts "StockChart",
+        rangeSelector:
+          selected: 1
+
+        title:
+          text: "AAPL Stock Price"
+
+        series: [
+          type: "candlestick"
+          name: "AAPL Stock Price"
+          data: data
+          dataGrouping:
+            units: [
+              [
+                "week" # unit name
+                [1] # allowed multiples
+              ]
+              [
+                "month"
+                [1, 2, 3, 4, 6]
+              ]
+            ]
+        ]
+
+      return
+
