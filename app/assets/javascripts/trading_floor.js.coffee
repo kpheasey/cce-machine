@@ -35,37 +35,95 @@ class App.TradingFloor extends App.Base
       $this.effect("highlight", { color: color }, 3000)
 
   initializeChart: ->
-    # TODO: implement asynchronous candle stick chart loading.
-    # http://jsfiddle.net/gh/get/jquery/1.9.1/highslide-software/highcharts.com/tree/master/samples/stock/demo/lazy-loading/
-
     # TODO: add volume to candlestick chart
     # http://www.highcharts.com/stock/demo/candlestick-and-volume
-    $.getJSON "http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-ohlc.json&callback=?", (data) ->
+    # See source code from the JSONP handler at https://github.com/highslide-software/highcharts.com/blob/master/samples/data/from-sql.php
+    $.getJSON "http://www.highcharts.com/samples/data/from-sql.php?callback=?", (data) ->
+
+      # Add a null value for the end date
+      data = [].concat(data, [[
+                                Date.UTC(2011, 9, 14, 19, 59)
+                                null
+                                null
+                                null
+                                null
+                              ]])
 
       # create the chart
       $("#chart").highcharts "StockChart",
-        rangeSelector:
-          selected: 1
+        chart:
+          type: "candlestick"
+          zoomType: "x"
+
+        navigator:
+          adaptToUpdatedData: false
+          series:
+            data: data
+
+        scrollbar:
+          liveRedraw: false
 
         title:
-          text: "AAPL Stock Price"
+          text: "AAPL history by the minute from 1998 to 2011"
+
+        subtitle:
+          text: "Displaying 1.7 million data points in Highcharts Stock by async server loading"
+
+        rangeSelector:
+          buttons: [
+            {
+              type: "hour"
+              count: 1
+              text: "1h"
+            }
+            {
+              type: "day"
+              count: 1
+              text: "1d"
+            }
+            {
+              type: "week"
+              count: 1
+              text: "1w"
+            }
+            {
+              type: "mont"
+              count: 1
+              text: "1m"
+            }
+            {
+              type: "all"
+              text: "All"
+            }
+          ]
+          inputEnabled: false # it supports only days
+          selected: 4 # all
+
+        xAxis:
+          events:
+            afterSetExtremes: $this.afterSetExtremes
+
+          minRange: 3600 * 1000 # one hour
 
         series: [
-          type: "candlestick"
-          name: "AAPL Stock Price"
           data: data
           dataGrouping:
-            units: [
-              [
-                "week" # unit name
-                [1] # allowed multiples
-              ]
-              [
-                "month"
-                [1, 2, 3, 4, 6]
-              ]
-            ]
+            enabled: false
         ]
 
       return
 
+  ###
+  Load new data depending on the selected min and max
+  ###
+  afterSetExtremes: (e) ->
+    currentExtremes = @getExtremes()
+    range = e.max - e.min
+    chart = $("#chart").highcharts()
+    chart.showLoading "Loading data from server..."
+    $.getJSON "http://www.highcharts.com/samples/data/from-sql.php?start=" + Math.round(e.min) + "&end=" + Math.round(e.max) + "&callback=?", (data) ->
+      chart.series[0].setData data
+      chart.hideLoading()
+      return
+
+    return
