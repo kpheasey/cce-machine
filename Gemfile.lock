@@ -16,6 +16,13 @@ GIT
       ransack (~> 1.0)
       sass-rails
 
+GIT
+  remote: git://github.com/kpheasey/ruby-btce.git
+  revision: a3ddbe5fb68470af90d53f3a16a47450334df3ac
+  specs:
+    btce (0.4.0)
+      monkey-patch
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -62,8 +69,6 @@ GEM
     bourbon (3.1.8)
       sass (>= 3.2.0)
       thor
-    btce (0.5.0)
-      monkey-patch
     builder (3.1.4)
     capistrano (3.1.0)
       i18n
@@ -255,7 +260,7 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-sass (~> 3.1.1.0)
   bootstrap3-datetimepicker-rails (~> 2.1.30)
-  btce (~> 0.5.0)
+  btce!
   capistrano (~> 3.1)
   capistrano-bundler (~> 1.1.2)
   capistrano-rails (~> 1.1)
