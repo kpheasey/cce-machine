@@ -10,7 +10,7 @@
         - else
           - trading_floor_link = trading_floor_path(exchange: exchange, market: exchange.default_market)
 
-        = link_to trading_floor_link do
+        = link_to trading_floor_link, class: 'trading-floor-link' do
           .row
             .col-md-6= exchange.name
             .col-md-6.price
@@ -23,7 +23,7 @@
   %ul.nav.nav-sidebar.markets
     - current_exchange.markets.each do |market|
       %li{ class: ( 'active' if current_market == market), 'data-exchange' => current_exchange.id, 'data-market' => market.id }
-        = link_to trading_floor_path(exchange: current_exchange, market: market) do
+        = link_to trading_floor_path(exchange: current_exchange, market: market), class: 'trading-floor-link' do
           .row
             .col-md-6= market.name
             .col-md-6.price
