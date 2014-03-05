@@ -37,6 +37,9 @@ class App.TradingFloor extends App.Base
   initializeChart: ->
     # TODO: implement asynchronous candle stick chart loading.
     # http://jsfiddle.net/gh/get/jquery/1.9.1/highslide-software/highcharts.com/tree/master/samples/stock/demo/lazy-loading/
+
+    # TODO: add volume to candlestick chart
+    # http://www.highcharts.com/stock/demo/candlestick-and-volume
     $.getJSON "http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-ohlc.json&callback=?", (data) ->
 
       # create the chart
