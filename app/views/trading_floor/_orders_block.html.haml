@@ -1,8 +1,8 @@
 %table.table.table-hover.orders-table
   %thead
     %th Price
-    %th= market.source.name
-    %th= market.target.name
+    %th= market.source.code.upcase
+    %th= market.target.code.upcase
   %tbody
     - orders.each do |order|
       %tr
