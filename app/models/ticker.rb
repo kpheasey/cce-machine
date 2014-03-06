@@ -42,10 +42,10 @@ class Ticker < ActiveRecord::Base
   end
 
   def calculate(trades)
-    self.high = trades.max(:price)
+    self.high = trades.maximum(:price)
     self.open = trades.last.price
     self.close = trades.first.price
-    self.low = trades.min(:price)
+    self.low = trades.minimum(:price)
     self.volume = trades.sum(:amount)
     self.count = trades.size
   end
