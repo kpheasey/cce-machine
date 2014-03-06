@@ -159,6 +159,7 @@ ActiveRecord::Schema.define(version: 20140306141805) do
     t.decimal  "close"
     t.decimal  "low"
     t.decimal  "volume"
+    t.integer  "count"
     t.datetime "timestamp"
     t.datetime "created_at"
     t.datetime "updated_at"

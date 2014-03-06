@@ -24,7 +24,7 @@ class Orders::CryptsyWorker
     end
 
     Order.where(exchange: exchange_market.exchange, market: exchange_market.market).
-        where('id NOT IN (?)', new_orders.map{ |o| o.id }).destroy_all
+        where('id NOT IN (?)', new_orders.map{ |o| o.id }).delete_all
   end
 
 end

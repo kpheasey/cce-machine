@@ -4,7 +4,7 @@ class Trade < ActiveRecord::Base
 
   validates_uniqueness_of :exchange_trade_id, scope: :exchange
 
-  default_scope -> { order('created_at DESC') }
+  default_scope -> { order('date DESC') }
 
   def self.on_create
     connection.execute 'LISTEN trades_new'

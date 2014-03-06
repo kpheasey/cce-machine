@@ -9,6 +9,7 @@ class CreateTickers < ActiveRecord::Migration
       t.decimal     :close
       t.decimal     :low
       t.decimal     :volume
+      t.integer     :count
       t.timestamp   :timestamp
 
       t.timestamps

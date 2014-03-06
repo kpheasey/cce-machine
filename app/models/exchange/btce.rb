@@ -10,7 +10,7 @@ class Exchange::BTCE < Exchange
   def fetch_trades
     exchange_market_codes = self.exchange_markets.pluck(:code).join('-')
 
-    Btce::Trades.new(exchange_market_codes, { limit: 500 }).json.each do |market_code, trades|
+    Btce::Trades.new(exchange_market_codes, { limit: 1000 }).json.each do |market_code, trades|
       exchange_market = self.exchange_markets.find_by(code: market_code)
       Trades::BtceWorker.perform_async(exchange_market.id, trades)
     end
