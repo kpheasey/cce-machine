@@ -40,4 +40,13 @@ class Ticker < ActiveRecord::Base
 
     return minutes, hours, days, weeks, months
   end
+
+  def calculate(trades)
+    self.high = trades.max(:price)
+    self.open = trades.last.price
+    self.close = trades.first.price
+    self.low = trades.min(:price)
+    self.volume = trades.sum(:amount)
+    self.count = trades.size
+  end
 end

@@ -11,14 +11,7 @@ class Ticker::OneHour < Ticker
         timestamp: start_time.beginning_of_hour
     )
 
-    tick.exchange_id = exchange_id
-    tick.market_id = market_id
-    tick.high = trades.max_by(&:price).price
-    tick.open = trades[-1].price
-    tick.close = trades[0].price
-    tick.low = trades.min_by(&:price).price
-    tick.volume = trades.map(&:amount).inject(0, &:+)
-    tick.count = trades.size
+    tick.calculate(trades)
     tick.save
   end
 
