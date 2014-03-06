@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140305165742) do
+ActiveRecord::Schema.define(version: 20140306141805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -149,6 +149,22 @@ ActiveRecord::Schema.define(version: 20140305165742) do
 
   add_index "orders", ["exchange_id"], name: "index_orders_on_exchange_id", using: :btree
   add_index "orders", ["market_id", "exchange_id"], name: "index_orders_on_market_id_and_exchange_id", using: :btree
+
+  create_table "tickers", force: true do |t|
+    t.string   "type"
+    t.integer  "exchange_id"
+    t.integer  "market_id"
+    t.decimal  "high"
+    t.decimal  "open"
+    t.decimal  "close"
+    t.decimal  "low"
+    t.decimal  "volume"
+    t.datetime "timestamp"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tickers", ["type", "exchange_id", "market_id"], name: "index_tickers_on_type_and_exchange_id_and_market_id", using: :btree
 
   create_table "trades", force: true do |t|
     t.integer  "market_id"
