@@ -27,7 +27,7 @@ class Trades::CryptsyWorker
     end
 
     unless trades.empty?
-      trades[1].notify_latest unless trades.empty?
+      trades.last.notify_latest
       Ticker.process(trades)
     end
   end

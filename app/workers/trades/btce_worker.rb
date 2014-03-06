@@ -26,7 +26,7 @@ class Trades::BtceWorker
     end
 
     unless trades.empty?
-      trades[1].notify_latest unless trades.empty?
+      trades.last.notify_latest unless trades.empty?
       Ticker.process(trades)
     end
 
