@@ -29,6 +29,12 @@ namespace :deploy do
         end
       end
     end
+
+    on roles(:ticker), in: :sequence, wait: 5 do
+      # restart sidekiq daemon
+      execute 'sudo stop sidekiq'
+      execute 'sudo start sidekiq'
+    end
   end
 
   after :finishing, 'deploy:cleanup'
