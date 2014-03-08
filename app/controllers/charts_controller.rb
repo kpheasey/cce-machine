@@ -6,8 +6,8 @@ class ChartsController < ApplicationController
     @line = Chart::Line.new(
         @market,
         @exchanges,
-        params[:start_date],
-        params[:end_date],
+        params[:start_time],
+        params[:end_time],
         params[:points].to_i
     )
 
@@ -16,11 +16,10 @@ class ChartsController < ApplicationController
 
   def candlestick
     @candlestick = Chart::Candlestick.new(
+        @exchange,
         @market,
-        @exchanges,
-        params[:start_date],
-        params[:end_date],
-        params[:points].to_i
+        params[:start_time],
+        params[:end_time]
     )
 
     render json: @candlestick.data
@@ -29,12 +28,13 @@ class ChartsController < ApplicationController
   private
 
   def check_params
-    raise 'params[:exchanges] not defined' if params[:exchanges].nil?
+    raise 'params[:exchanges] or params[:exchange] not defined' if (params[:exchanges].blank? && params[:exchange.blank?])
     raise 'params[:market] not defined' if params[:market].blank?
   end
 
   def parse_params
-    @exchanges = Exchange.where(id: params[:exchanges].split(','))
+    @exchanges = Exchange.where(id: params[:exchanges].split(',')) unless params[:exchanges].blank?
+    @exchange = Exchange.find(params[:exchange]) unless params[:exchange].blank?
     @market = Market.find(params[:market])
   end
 end

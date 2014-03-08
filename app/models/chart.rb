@@ -1,15 +1,10 @@
 class Chart
 
-  attr_accessor :exchanges, :market, :start_date, :end_date, :points
-  attr_reader :interval
-
-  def initialize(market, exchanges = [], start_date = nil, end_date = nil, points = nil)
+  def initialize(markets, exchanges = [], start_date = nil, end_date = nil, points = nil)
     @exchanges = (exchanges.is_a?(Array) || exchanges.is_a?(ActiveRecord::Relation)) ? exchanges : [exchanges]
-    @market = market
-    @end_date = end_date.nil? ? Time.now : Time.parse(end_date)
-    @start_date = start_date.nil? ? @end_date - 6.hours : Time.parse(start_date)
-    @points = points || 12
-    @interval = (@end_date.to_i - @start_date.to_i) / @points
+    @markets = (markets.is_a?(Array) ||  markets.is_a?(ActiveRecord::Relation)) ? markets : [markets]
+    @end_time = end_date.nil? ? Time.now : Time.parse(end_date)
+    @start_time = start_date.nil? ? @end_time - 6.hours : Time.parse(start_date)
   end
 
 end

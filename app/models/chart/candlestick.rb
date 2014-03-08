@@ -1,132 +1,56 @@
 class Chart::Candlestick < Chart
 
-  attr_reader :exchanges_trades, :trades
+  attr_accessor :exchange, :market, :ticks, :start_time, :end_time, :range
+
+  def initialize(exchange, market, start_time, end_time)
+    @exchange = exchange
+    @market = market
+    @start_time = start_time.to_i
+    @end_time = end_time.to_i
+    @range = @end_time - @start_time
+    fetch_trades
+  end
 
   def data
-    data = {
-        cols: [
-            { id: '', label: 'Time', pattern: '', type: 'datetime' },
-            { id: '', label: 'Low', pattern: '', type: 'number' },
-            { id: '', label: 'Opening', pattern: '', type: 'number' },
-            { id: '', label: 'Closing', pattern: '', type: 'number' },
-            { id: '', label: 'High', pattern: '', type: 'number' }
-        ],
-        rows: []
-    }
+    rows = []
 
-    start_time = @end_date
-    @points.times do
-      end_time = start_time - @interval.seconds
-      row = [{ v:"Date(#{start_time.year}, #{start_time.month}, #{start_time.day}, #{start_time.hour}, #{start_time.min}, #{start_time.sec})" }]
-
-      if @exchanges.empty?
-        row = market_only_row(row, start_time, end_time)
-      elsif @exchanges.length == 1
-        row = single_exchange_row(row, start_time, end_time)
-      else
-        row = multiple_exchange_row(row, start_time, end_time)
-      end
-
-      next if row.nil?
-
-      data[:rows] << { c: row }
-      start_time = end_time
+    @ticks.each do |tick|
+      rows << [
+          (tick.timestamp.to_time.to_i * 1000),
+          tick.open.to_f,
+          tick.high.to_f,
+          tick.low.to_f,
+          tick.close.to_f
+      ]
     end
 
-    return data
-  end
-
-  def market_only_row(row, start_time, end_time)
-    @trades = Trade.where(market: @market).where('date < ? AND date >= ?', start_time, end_time)
-
-    return nil if @trades.empty?
-
-    row << { v: @trades.max_by(&:price).price, f: nil }
-    row << { v: @trades[-1].price, f: nil }
-    row << { v: @trades[0].price, f: nil }
-    row << { v: @trades.min_by(&:price).price, f: nil }
-
-    return row
-  end
-
-  def single_exchange_row(row, start_time, end_time)
-    @trades = Trade.where(exchange: @exchanges.first, market: @market).where('date < ? AND date >= ?', start_time, end_time)
-
-    return nil if @trades.empty?
-
-    row << { v: @trades.max_by(&:price).price, f: nil }
-    row << { v: @trades[-1].price, f: nil }
-    row << { v: @trades[0].price, f: nil }
-    row << { v: @trades.min_by(&:price).price, f: nil }
-
-    return row
-  end
-
-  def multiple_exchange_row(row, start_time, end_time)
-    @trades = Trade.includes(:exchange).where(trades: @exchanges.first, market: @market).where('date < ? AND date >= ?', start_time, end_time)
-
-    return nil if trades.empty?
-
-    row << { v: average_high_price, f: nil }
-    row << { v: average_close_price, f: nil }
-    row << { v: average_open_price, f: nil }
-    row << { v: average_low_price, f: nil }
-
-    return row
+    return rows
   end
 
   private
 
-  def average_high_price
-    total_high = 0
+  def fetch_trades
+    Rails.logger.info @range
 
-    @exchanges_trades.each do |exchange_trades|
-      total_high += exchange_trades.max_by(&:price).price
+
+    case
+      # milliseconds * seconds * minutes * hours * days
+      when @range <= 1000 * 60 * 60 * 24 * 2 # 2 day or less, use one minute increments
+        Rails.logger.info 'here'
+        @ticks = Ticker::OneMinute
+      when @range <= 1000 * 60 * 60 * 24 * 30 # 30 days or less, use one hour increments
+        @ticks = Ticker::OneHour
+      when @range <= 1000 * 60 * 60 * 24 * 365 # 1 year or less, use one day increments
+        @ticks = Ticker::OneDay
+      when @range <= 1000 * 60 * 60 * 24 * 1825 # 5 years or less, use weekly increments
+        @ticks = Ticker::OneWeek
+      else # more than 5 years, use monthly increments
+       @ticks = Ticker::OneMonth
     end
 
-    return total_high / @exchanges_trades.length
-  end
-
-  def average_close_price
-    total_low = 0
-
-    @exchanges_trades.each do |exchange_trades|
-      total_low += exchange_trades[-1].price
-    end
-
-    return total_low / @exchanges_trades.length
-  end
-
-  def average_open_price
-    total_open = 0
-
-    @exchanges_trades.each do |exchange_trades|
-      total_open += exchange_trades[0].price
-    end
-
-    return total_open / @exchanges_trades.length
-  end
-
-  def average_low_price
-    total_low = 0
-
-    @exchanges_trades.each do |exchange_trades|
-      total_low += exchange_trades.min_by(&:price).price
-    end
-
-    return total_low / @exchanges_trades.length
-  end
-
-  def exchanges_trades
-    @exchanges_trades ||= begin
-      exchange_trades = {}
-
-      @trades.each do |trade|
-        exchange_trades[trade.exchange.name] << trade
-      end
-
-      exchange_trades
-    end
+    @ticks = @ticks.where(exchange: @exchange, market: @market).
+        where('timestamp >= ? AND timestamp <= ?', Time.at((@start_time / 1000).round), Time.at((@end_time / 1000).round)).
+        order('timestamp ASC')
   end
 
 end

@@ -12,7 +12,7 @@ class Chart::Line < Chart
       data[:cols] << { id: '', label: exchange.name, pattern: '', type: 'number'}
     end
 
-    start_time = @end_date
+    start_time = @end_time
     @points.times do
       end_time = start_time - @interval.seconds
       row = [ { v: "Date(#{start_time.year}, #{start_time.month}, #{start_time.day}, #{start_time.hour}, #{start_time.min}, #{start_time.sec})", f: nil} ]
