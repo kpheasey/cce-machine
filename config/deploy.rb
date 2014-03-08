@@ -34,8 +34,15 @@ namespace :deploy do
     end
   end
 
+  desc 'Inform newrelic of deployment'
+  task :inform_newrelic do
+    on roles(:app) do
+      execute 'curl -H "x-api-key:ff7372426bf76f9341d93af73f3913b956da14b72f4ee6d" -d "deployment[app_name]=CCE Machine" https://api.newrelic.com/deployments.xml'
+    end
+  end
+
   after :finishing, 'deploy:cleanup'
 end
 
 after 'deploy:publishing', 'deploy:restart'
-after "deploy:update", "newrelic:notice_deployment"
+after 'deploy:finishing', 'deploy:inform_newrelic'

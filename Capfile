@@ -17,5 +17,6 @@ require 'new_relic/recipes'
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
 Dir.glob('lib/capistrano/tasks/*.cap').each { |r| import r }
+Dir['vendor/plugins/*/recipes/*.rb'].each { |plugin| load(plugin) }
 
 SSHKit.config.command_map[:whenever] = 'bundle exec whenever'
