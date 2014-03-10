@@ -3,7 +3,7 @@ class Exchange::BTCE < Exchange
   # fetch trades and orders
   def tick
     fetch_trades
-    fetch_orders
+    #fetch_orders
   end
 
   # fetch past trades

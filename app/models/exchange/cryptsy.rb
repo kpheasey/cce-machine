@@ -11,7 +11,7 @@ class Exchange::CRYPTSY < Exchange
 
       exchange_market = self.exchange_markets.find_by(code: market[1]['marketid'])
       Trades::CryptsyWorker.perform_async(exchange_market.id, market[1]['recenttrades'])
-      Orders::CryptsyWorker.perform_async(exchange_market.id, market[1]['sellorders'], market[1]['buyorders'])
+      #Orders::CryptsyWorker.perform_async(exchange_market.id, market[1]['sellorders'], market[1]['buyorders'])
     end
   end
 
