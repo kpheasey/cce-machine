@@ -1,6 +1,12 @@
 Crypto Currency Exchange Machine
 ===
 
+## Donate
+If you would like development to continue, we need some servers and a reason to keep going!  Please feel free to donate:
+
+BTC: 12reewXZD6n6i1jdru6hAYuVaBeUmpEdxV
+
+## Setup
 After starting the application, sidekiq must be started.  All tickers are processed with background tasks in sidekiq.  ```bundle exec sidekiq```
 
 Database must be PostgreSQL because of the notifications.
