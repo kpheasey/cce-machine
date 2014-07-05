@@ -5,7 +5,7 @@ After starting the application, sidekiq must be started.  All tickers are proces
 
 Database must be PostgreSQL because of the notifications.
 
-To get the most current data from all exchanges run ```bundle exec rake exchanges:tick```
+To get the most current data from all exchanges run ```bundle exec rake exchanges:tick```.  If you havent ticked in a while, this could take some time since tons of new data will be written.
 
 There is a sidekiq daemon that will run on ubuntu 14.04 during a capistrano deployment.  Scheduler will start ticking every 1 minute.
 
